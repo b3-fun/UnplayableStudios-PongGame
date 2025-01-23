@@ -24,13 +24,13 @@ import { AuthService } from '../auth/auth.service';
 //https://gabrieltanner.org/blog/nestjs-realtime-chat/
 
 // <<<<<<< HEAD
-@WebSocketGateway(3003, {
-  // >>>>>>> 02e12a4fd13aad1b83ccec36c8e7ef2f11d200c4
+@WebSocketGateway({
+  namespace: 'dm',
   cors: {
     origin: process.env.CLIENT_URL,
     credentials: true,
-  },
-  namespace: 'dm',
+    allowedHeaders: ["Authorization"]
+  }
 })
 export class ChatGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {

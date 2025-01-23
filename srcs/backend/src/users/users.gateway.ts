@@ -12,11 +12,13 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { UsersService } from './users.service';
 import { AuthService } from '../auth/auth.service';
 
-@WebSocketGateway(3004, {
+@WebSocketGateway({
   namespace: 'userstate',
   cors: {
     origin: process.env.CLIENT_URL,
-  },
+    credentials: true,
+    allowedHeaders: ["Authorization"]
+  }
 })
 export class UsersGateway
   implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect

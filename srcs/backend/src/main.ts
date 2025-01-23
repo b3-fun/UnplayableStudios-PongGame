@@ -4,12 +4,15 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import * as express from 'express';
 import { Logger } from '@nestjs/common';
+import {IoAdapter} from "@nestjs/platform-socket.io";
 
 async function bootstrap() {
   const logger = new Logger('Bootstrap');
   try {
     const app = await NestFactory.create(AppModule);
     logger.log('Application instance created');
+
+    app.useWebSocketAdapter(new IoAdapter(app));
 
     app.use(cookieParser());
     logger.log('Cookie parser middleware enabled');

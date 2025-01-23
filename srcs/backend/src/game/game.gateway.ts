@@ -17,12 +17,13 @@ import { GameService } from './game.service';
 import { AuthService } from '../auth/auth.service';
 
 // @UseGuards(AuthGuard('jwt'))
-@WebSocketGateway(3003, {
+@WebSocketGateway({
+    namespace: 'game',
     cors: {
         origin: process.env.CLIENT_URL,
         credentials: true,
-    },
-    namespace: 'game',
+        allowedHeaders: ["Authorization"]
+    }
 })
 export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
     accessJwtStrategy: any;
