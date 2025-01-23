@@ -1,15 +1,45 @@
-import React from 'react';
+import React, { createContext, useReducer } from 'react';
 import { GlobalReducer } from './Reducer';
 
-// @ts-ignore
-export const GlobalContext = React.createContext();
-
-type Props = {
-    children: JSX.Element;
+type ContextType = {
+    data: {
+        loader: boolean;
+        notification: any;
+        userInfo: any;
+        matchHistory: any[];
+        liveMatch: any[];
+        online: any[];
+        on_game: any[];
+        user_id: any;
+        opponent_id: any;
+        playing_with_friend: any;
+    };
+    dispatch: React.Dispatch<any>;
 };
 
-const GlobalContextProvider = ({ children }: Props) => {
-    // init values
+// Create context with initial value
+export const GlobalContext = createContext<ContextType>({
+    data: {
+        loader: false,
+        notification: null,
+        userInfo: null,
+        matchHistory: [],
+        liveMatch: [],
+        online: [],
+        on_game: [],
+        user_id: null,
+        opponent_id: null,
+        playing_with_friend: null,
+    },
+    dispatch: () => null,
+});
+
+interface Props {
+    children: React.ReactNode;
+}
+
+// Export as named export
+export const GlobalContextProvider = ({ children }: Props) => {
     const initValue = {
         loader: false,
         notification: null,
@@ -23,10 +53,11 @@ const GlobalContextProvider = ({ children }: Props) => {
         playing_with_friend: null,
     };
 
-    // reducer
-    const [data, dispatch] = React.useReducer(GlobalReducer, initValue);
+    const [data, dispatch] = useReducer(GlobalReducer, initValue);
 
-    return <GlobalContext.Provider value={{ data, dispatch }}>{children}</GlobalContext.Provider>;
+    return (
+        <GlobalContext.Provider value={{ data, dispatch }}>
+            {children}
+        </GlobalContext.Provider>
+    );
 };
-
-export default GlobalContextProvider;
