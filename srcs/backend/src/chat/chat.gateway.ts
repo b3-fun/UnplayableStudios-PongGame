@@ -27,7 +27,7 @@ import { AuthService } from '../auth/auth.service';
 @WebSocketGateway(3003, {
   // >>>>>>> 02e12a4fd13aad1b83ccec36c8e7ef2f11d200c4
   cors: {
-    origin: '*',
+    origin: process.env.CLIENT_URL,
     credentials: true,
   },
   namespace: 'dm',

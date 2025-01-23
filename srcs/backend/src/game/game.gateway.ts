@@ -19,7 +19,7 @@ import { AuthService } from '../auth/auth.service';
 // @UseGuards(AuthGuard('jwt'))
 @WebSocketGateway(3003, {
     cors: {
-        origin: '*',
+        origin: process.env.CLIENT_URL,
         credentials: true,
     },
     namespace: 'game',
