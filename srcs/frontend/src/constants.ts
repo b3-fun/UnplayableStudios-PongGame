@@ -35,11 +35,11 @@ export const BLOCKED_USERS = API + '/user/list/all_blocked';
 
 export const pagesContent = {
     home: {
-        url: '/',
+        url: '/home',
         title: 'PonGame | Welcome',
     },
     login: {
-        url: '/login',
+        url: '/',
         title: 'PonGame | Log In',
     },
     profile: {
