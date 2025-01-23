@@ -160,8 +160,8 @@ async deleteTwoFa(user_id : string)
 	decodeB3Token(token: string): {
 		id: string;
 		address: string;
-		username: string;
-		avatar: string;
+		username?: string;
+		avatar?: string;
 		gameId: string;
 		license: string;
 		token: string;
@@ -169,6 +169,13 @@ async deleteTwoFa(user_id : string)
 		const base64Payload = token.split('.')[1];
 		const payload = Buffer.from(base64Payload, 'base64').toString();
 		return JSON.parse(payload);
+	}
+
+	formatAddress(address: string): string {
+		if (!address) return '';
+		const first4 = address.slice(0, 6);  // Include "0x" prefix
+		const last4 = address.slice(-4);
+		return `${first4}...${last4}`;
 	}
 
 }
