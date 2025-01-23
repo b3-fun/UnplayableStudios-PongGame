@@ -38,6 +38,7 @@ import { io } from 'socket.io-client';
 import { updateLiveMatch } from '../State/Action';
 import { getUserInfo } from '../State/Api';
 import { GlobalContext } from '../State/Provider';
+import {getJwtToken} from "../utils/token";
 
 const HomePage = () => {
     // page title
@@ -55,6 +56,11 @@ const HomePage = () => {
 
     // useEffect
     React.useEffect(() => {
+        const token = getJwtToken();
+        if (!token) {
+            console.warn('No valid JWT token found');
+            return;
+        }
         getUserInfo(dispatch)
             .then((info: any) => {
                 if (!info?.updated) {
@@ -67,14 +73,7 @@ const HomePage = () => {
         // socket
         const socket = io(`${SOCKET}/game`, {
             extraHeaders: {
-                Authorization: JSON.parse(
-                    decodeURIComponent(
-                        document.cookie
-                            .split(';')
-                            .find(c => c.trim().startsWith('jwt='))
-                            ?.split('=')[1] || ''
-                    ).replace('j:', '')
-                ).access_token
+                Authorization: token
             }
         });
 

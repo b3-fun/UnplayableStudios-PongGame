@@ -12,6 +12,7 @@ import { io } from 'socket.io-client';
 import { newNotification } from '../State/Action';
 import { GlobalContext } from '../State/Provider';
 import {Cookies} from 'react-cookie'
+import {getJwtToken} from "../utils/token";
 
 function MessagingBox() {
     const { dispatch, state } = useContext<any>(ChatContext);
@@ -25,16 +26,14 @@ function MessagingBox() {
     else searchIndex = newGroups.findIndex((id: any) => selectedChat.id === id.id);
 
     useEffect(() => {
+        const token = getJwtToken();
+        if (!token) {
+            console.warn('No valid JWT token found');
+            return;
+        }
         const socket = io(SOCKET + '/dm', {
             extraHeaders: {
-                Authorization: JSON.parse(
-                    decodeURIComponent(
-                        document.cookie
-                            .split(';')
-                            .find(c => c.trim().startsWith('jwt='))
-                            ?.split('=')[1] || ''
-                    ).replace('j:', '')
-                ).access_token
+                Authorization: token
             }
         });
 

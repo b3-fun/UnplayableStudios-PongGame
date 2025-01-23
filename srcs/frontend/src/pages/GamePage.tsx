@@ -11,6 +11,7 @@ import useWindowWidth from '../hooks/useWidth';
 import { clearGameWithFriend, clearOpponent, newNotification } from '../State/Action';
 import { getUserInfo } from '../State/Api';
 import { GlobalContext } from '../State/Provider';
+import {getJwtToken} from "../utils/token";
 
 export default function GamePage() {
     usePageTitle(pagesContent.play.title);
@@ -48,18 +49,16 @@ export default function GamePage() {
 
     // useEffect
     React.useEffect(() => {
+        const token = getJwtToken();
+        if (!token) {
+            console.warn('No valid JWT token found');
+            return;
+        }
         // socket
         const socket = io(`${SOCKET}/game`,
             {
                 extraHeaders: {
-                    Authorization: JSON.parse(
-                        decodeURIComponent(
-                            document.cookie
-                                .split(';')
-                                .find(c => c.trim().startsWith('jwt='))
-                                ?.split('=')[1] || ''
-                        ).replace('j:', '')
-                    ).access_token
+                    Authorization: token
                 }
             }
         );
@@ -253,17 +252,15 @@ export default function GamePage() {
     }, [speedMode]);
 
     React.useEffect(() => {
+        const token = getJwtToken();
+        if (!token) {
+            console.warn('No valid JWT token found');
+            return;
+        }
         // socket
         const socket = io(`${SOCKET}/game`, {
             extraHeaders: {
-                Authorization: JSON.parse(
-                    decodeURIComponent(
-                        document.cookie
-                            .split(';')
-                            .find(c => c.trim().startsWith('jwt='))
-                            ?.split('=')[1] || ''
-                    ).replace('j:', '')
-                ).access_token
+                Authorization: token
             }
         });
         //

@@ -10,6 +10,7 @@ import useWindowWidth from '../hooks/useWidth';
 import { newNotification } from '../State/Action';
 import { getUserInfo } from '../State/Api';
 import { GlobalContext } from '../State/Provider';
+import {getJwtToken} from "../utils/token";
 
 export default function LiveMatchPage() {
     usePageTitle(pagesContent.watch.title);
@@ -44,17 +45,15 @@ export default function LiveMatchPage() {
 
     // useEffect
     React.useEffect(() => {
+        const token = getJwtToken();
+        if (!token) {
+            console.warn('No valid JWT token found');
+            return;
+        }
         // socket
         const socket = io(`${SOCKET}/game`,{
             extraHeaders: {
-                Authorization: JSON.parse(
-                    decodeURIComponent(
-                        document.cookie
-                            .split(';')
-                            .find(c => c.trim().startsWith('jwt='))
-                            ?.split('=')[1] || ''
-                    ).replace('j:', '')
-                ).access_token
+                Authorization: token
             }
         });
         // canvas
@@ -176,17 +175,16 @@ export default function LiveMatchPage() {
     }, [userInfo, params?.room_name]);
 
     React.useEffect(() => {
+        const token = getJwtToken();
+        if (!token) {
+            console.warn('No valid JWT token found');
+            return;
+        }
+
         // socket
         const socket = io(`${SOCKET}/game`, {
             extraHeaders: {
-                Authorization: JSON.parse(
-                    decodeURIComponent(
-                        document.cookie
-                            .split(';')
-                            .find(c => c.trim().startsWith('jwt='))
-                            ?.split('=')[1] || ''
-                    ).replace('j:', '')
-                ).access_token
+                Authorization: token
             }
         });
         //

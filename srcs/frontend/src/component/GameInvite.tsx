@@ -5,6 +5,7 @@ import { GlobalContext } from '../State/Provider';
 import { useNavigate } from 'react-router-dom';
 import { gameWithFriend } from '../State/Action';
 import { io } from 'socket.io-client';
+import {getJwtToken} from "../utils/token";
 // TYPE
 type Props = {
     name: string;
@@ -26,16 +27,10 @@ const GameInvite = ({ setInvite, name, avatar, room_name, opponent_id }: Props) 
     };
 
     const handleCancel = () => {
+        const token = getJwtToken();
         const socket = io(`${SOCKET}/game`,{
             extraHeaders: {
-                Authorization: JSON.parse(
-                    decodeURIComponent(
-                        document.cookie
-                            .split(';')
-                            .find(c => c.trim().startsWith('jwt='))
-                            ?.split('=')[1] || ''
-                    ).replace('j:', '')
-                ).access_token
+                Authorization: token
             }
         });
 

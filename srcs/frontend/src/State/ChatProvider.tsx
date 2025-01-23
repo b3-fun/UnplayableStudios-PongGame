@@ -7,6 +7,7 @@ import { io } from 'socket.io-client';
 import { FRIENDS_URL, SOCKET, USER_URL } from '../constants';
 import { chatReducer } from '../reducers/chatReducer';
 import { Cookies } from 'react-cookie';
+import { getJwtToken } from '../utils/token';
 const cookies = new Cookies();
 
 // @ts-ignore
@@ -30,17 +31,12 @@ const ChatProvider = ({ children }: Props) => {
     const [state, dispatch] = useReducer<any>(chatReducer, InitialValues);
     //Authorization: document.cookie.split('=')[1].split('%22')[3],
 
+    const token = getJwtToken();
+
     const socket = io(SOCKET + '/dm', {
 
         extraHeaders: {
-            Authorization: JSON.parse(
-                decodeURIComponent(
-                    document.cookie
-                        .split(';')
-                        .find(c => c.trim().startsWith('jwt='))
-                        ?.split('=')[1] || ''
-                ).replace('j:', '')
-            ).access_token
+            Authorization: token
         }
     }
 );
