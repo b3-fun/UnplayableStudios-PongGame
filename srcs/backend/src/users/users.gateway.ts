@@ -15,7 +15,8 @@ import { AuthService } from '../auth/auth.service';
 @WebSocketGateway(3004, {
   namespace: 'userstate',
   cors: {
-    origin: process.env.CLIENT_URL,
+    // origin: process.env.CLIENT_URL,
+    origin: 'https://ponggame-fe-production.up.railway.app',
   },
 })
 export class UsersGateway

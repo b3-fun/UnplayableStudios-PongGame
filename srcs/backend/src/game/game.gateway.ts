@@ -19,7 +19,8 @@ import { AuthService } from '../auth/auth.service';
 // @UseGuards(AuthGuard('jwt'))
 @WebSocketGateway(3003, {
     cors: {
-        origin: process.env.CLIENT_URL,
+        // origin: process.env.CLIENT_URL,
+        origin: 'https://ponggame-fe-production.up.railway.app',
         credentials: true,
     },
     namespace: 'game',
