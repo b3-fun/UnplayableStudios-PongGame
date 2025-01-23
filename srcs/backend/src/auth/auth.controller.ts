@@ -134,7 +134,7 @@ export class AuthController {
             const username = decoded.username || this.AuthService.formatAddress(decoded.address);
 
             // Use avatar if provided, otherwise null
-            const avatar = decoded.avatar || null;
+            const avatar = decoded.avatar || "";
 
             const found = await this.AuthService.createAccount(username, avatar);
             const twofa = !found.two_authentication;
