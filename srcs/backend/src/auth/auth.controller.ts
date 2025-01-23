@@ -154,7 +154,6 @@ export class AuthController {
                 httpOnly: false,
                 sameSite: 'none',
                 secure: true,
-                domain: 'ponggame-fe-production.up.railway.app',
                 path: '/'
             });
 
