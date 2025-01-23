@@ -218,30 +218,30 @@ const ProfilePage = () => {
                                         userInfo?.games_played === 0 ? 0 : Math.round((userInfo?.games_won / userInfo?.games_played) * 100)
                                     }
                                 />
-                                <Spacer />
-                                {me && (
-                                    <>
-                                        <Line maxW="10rem" />
-                                        <Button
-                                            bg="red"
-                                            color="blackAlpha.900"
-                                            borderRadius="3xl"
-                                            fontSize="3xl"
-                                            fontWeight="light"
-                                            px={10}
-                                            py={8}
-                                            _focus={{
-                                                bg: 'red',
-                                            }}
-                                            _hover={{
-                                                bg: 'red',
-                                            }}
-                                            onClick={signoutHandler}
-                                        >
-                                            Sign Out
-                                        </Button>
-                                    </>
-                                )}
+                                {/*<Spacer />*/}
+                                {/*{me && (*/}
+                                {/*    <>*/}
+                                {/*        <Line maxW="10rem" />*/}
+                                {/*        <Button*/}
+                                {/*            bg="red"*/}
+                                {/*            color="blackAlpha.900"*/}
+                                {/*            borderRadius="3xl"*/}
+                                {/*            fontSize="3xl"*/}
+                                {/*            fontWeight="light"*/}
+                                {/*            px={10}*/}
+                                {/*            py={8}*/}
+                                {/*            _focus={{*/}
+                                {/*                bg: 'red',*/}
+                                {/*            }}*/}
+                                {/*            _hover={{*/}
+                                {/*                bg: 'red',*/}
+                                {/*            }}*/}
+                                {/*            onClick={signoutHandler}*/}
+                                {/*        >*/}
+                                {/*            Sign Out*/}
+                                {/*        </Button>*/}
+                                {/*    </>*/}
+                                {/*)}*/}
                             </Stack>
                         </>
                     </Card>
