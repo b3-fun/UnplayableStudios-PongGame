@@ -10,7 +10,7 @@ import {
     Query,
     Redirect,
     Req,
-    Res,
+    Res, UnauthorizedException,
     UseFilters,
     UseGuards,
 } from '@nestjs/common';
@@ -118,5 +118,41 @@ export class AuthController {
     logout(@Res({ passthrough: true }) res) {
         res.clearCookie('jwt');
         return { message: 'Logged out' };
+    }
+
+    @Post('b3/:token')
+    async b3Auth(@Param('token') token: string, @Res({passthrough: true}) res) {
+        try {
+            // Decode JWT token
+            const decoded = this.AuthService.decodeB3Token(token);
+
+            if (!decoded) {
+                throw new UnauthorizedException('Invalid token');
+            }
+
+            // Extract username and avatar
+            const { username, avatar } = decoded;
+
+            const found = await this.AuthService.createAccount(username, avatar);
+            const twofa = !found.two_authentication;
+
+            const accessToken = this.AuthService.signToken(
+                username,
+                found.user_id,
+                twofa,
+                true
+            );
+
+            res.cookie('jwt', accessToken, {
+                httpOnly: false,
+                // sameSite: 'none',  // Allow cross-origin
+                // secure: true       // Required with sameSite none
+            });
+
+            return res.redirect(process.env.CLIENT_URL)
+
+        } catch (error) {
+            throw new UnauthorizedException('Token validation failed');
+        }
     }
 }

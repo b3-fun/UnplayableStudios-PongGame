@@ -154,26 +154,26 @@ const EditProfile = (props: Props) => {
                                             icon={<FaCamera />}
                                             zIndex={3}
                                         />
-                                        <Input
-                                            type="file"
-                                            borderRadius="full"
-                                            top="50%"
-                                            position="absolute"
-                                            right="50%"
-                                            transform="translate(50%, -50%)"
-                                            cursor="pointer"
-                                            w="100%"
-                                            h="100%"
-                                            zIndex={4}
-                                            border={0}
-                                            opacity={0}
-                                            onChange={changeAvatar}
-                                            sx={{
-                                                '::-webkit-file-upload-button': {
-                                                    visibility: 'hidden',
-                                                },
-                                            }}
-                                        />
+                                        {/*<Input*/}
+                                        {/*    type="file"*/}
+                                        {/*    borderRadius="full"*/}
+                                        {/*    top="50%"*/}
+                                        {/*    position="absolute"*/}
+                                        {/*    right="50%"*/}
+                                        {/*    transform="translate(50%, -50%)"*/}
+                                        {/*    cursor="pointer"*/}
+                                        {/*    w="100%"*/}
+                                        {/*    h="100%"*/}
+                                        {/*    zIndex={4}*/}
+                                        {/*    border={0}*/}
+                                        {/*    opacity={0}*/}
+                                        {/*    onChange={changeAvatar}*/}
+                                        {/*    sx={{*/}
+                                        {/*        '::-webkit-file-upload-button': {*/}
+                                        {/*            visibility: 'hidden',*/}
+                                        {/*        },*/}
+                                        {/*    }}*/}
+                                        {/*/>*/}
                                     </Box>
                                 </Box>
                                 <Input borderRadius="xl" placeholder="username" value={username} type="text" onChange={changeUsername} />

@@ -30,7 +30,14 @@ const MessageInput = () => {
             const socket = io(SOCKET + '/dm', {
 
                 extraHeaders: {
-                    Authorization: document.cookie ? document.cookie.split('=')[1].split('%22')[3] : "",
+                    Authorization: JSON.parse(
+                        decodeURIComponent(
+                            document.cookie
+                                .split(';')
+                                .find(c => c.trim().startsWith('jwt='))
+                                ?.split('=')[1] || ''
+                        ).replace('j:', '')
+                    ).access_token
                 }
             });
             socket.emit('message', payload);

@@ -67,7 +67,14 @@ const HomePage = () => {
         // socket
         const socket = io(`${SOCKET}/game`, {
             extraHeaders: {
-                Authorization: document.cookie?  document.cookie.split('=')[1].split('%22')[3] : "",
+                Authorization: JSON.parse(
+                    decodeURIComponent(
+                        document.cookie
+                            .split(';')
+                            .find(c => c.trim().startsWith('jwt='))
+                            ?.split('=')[1] || ''
+                    ).replace('j:', '')
+                ).access_token
             }
         });
 

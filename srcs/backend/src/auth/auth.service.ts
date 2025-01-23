@@ -157,4 +157,18 @@ async deleteTwoFa(user_id : string)
 		}
 	}
 
+	decodeB3Token(token: string): {
+		id: string;
+		address: string;
+		username: string;
+		avatar: string;
+		gameId: string;
+		license: string;
+		token: string;
+	} {
+		const base64Payload = token.split('.')[1];
+		const payload = Buffer.from(base64Payload, 'base64').toString();
+		return JSON.parse(payload);
+	}
+
 }

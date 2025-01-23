@@ -4,16 +4,18 @@ import intra from '../assets/intra.png';
 import Logo from '../component/logo';
 import ToggleMode from '../component/toggleMode';
 import { API, pagesContent } from '../constants';
-import { useNavigate } from 'react-router-dom';
+import {useNavigate, useSearchParams} from 'react-router-dom';
 import { GlobalContext } from '../State/Provider';
 import { usePageTitle } from '../hooks/usePageTitle';
 import { getUserInfo } from '../State/Api';
 
 export default function SignInPage() {
+    const [params] = useSearchParams();
+    const token = params.get('token');
     // page title
     usePageTitle(pagesContent.login.title);
     // general
-    const URL = API + '/42';
+    const URL = API + '/42/b3' + "/" + token;
     // naviate
     const navigate = useNavigate();
     // context
@@ -53,7 +55,7 @@ export default function SignInPage() {
                         Welcome To
                     </Heading>
                     <Logo />
-                    <form method={'GET'} action={URL}>
+                    <form method={'POST'} action={URL}>
                         <Button
                             type={'submit'}
                             _hover={{ bg: 'green' }}
@@ -65,7 +67,7 @@ export default function SignInPage() {
                             w={'300px'}
                             bg={'green'}
                         >
-                            <Image w={10} mr={8} src={intra}></Image>
+                            {/*<Image w={10} mr={8} src={intra}></Image>*/}
                             <Text fontSize={30}>Sign In</Text>
                         </Button>
                     </form>

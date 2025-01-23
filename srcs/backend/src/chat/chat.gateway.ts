@@ -49,8 +49,11 @@ export class ChatGateway
   }
 
   async handleConnection(client: Socket, ...args: any[]) {
+    this.logger.log(`Client handleConnection: ${client.handshake.headers?.authorization}`);
+
     const token = await this.authService.verifyToken(client.handshake.headers?.authorization);
     if (!token) {
+      this.logger.log(`Client handleConnection: NOT OK`);
       client.disconnect();
     }
     this.userId = token?.userId;
