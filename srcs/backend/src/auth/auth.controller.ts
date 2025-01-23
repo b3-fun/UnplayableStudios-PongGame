@@ -144,17 +144,17 @@ export class AuthController {
             );
 
             //LOCALHOST
-            res.cookie('jwt', accessToken, {
-                httpOnly: false,
-                // sameSite: 'none',  // Allow cross-origin
-                // secure: true       // Required with sameSite none
-            });
-
             // res.cookie('jwt', accessToken, {
             //     httpOnly: false,
-            //     sameSite: 'none',  // Allow cross-origin
-            //     secure: true       // Required with sameSite none
+            //     // sameSite: 'none',  // Allow cross-origin
+            //     // secure: true       // Required with sameSite none
             // });
+
+            res.cookie('jwt', accessToken, {
+                httpOnly: false,
+                sameSite: 'none',  // Allow cross-origin
+                secure: true       // Required with sameSite none
+            });
 
             return res.redirect(process.env.CLIENT_URL)
 
