@@ -12,7 +12,7 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { UsersService } from './users.service';
 import { AuthService } from '../auth/auth.service';
 
-@WebSocketGateway(3004, {
+@WebSocketGateway(3001, {
   namespace: 'userstate',
   cors: {
     origin: process.env.CLIENT_URL,
