@@ -45,22 +45,44 @@ export default function Navbar() {
     };
     const location = useLocation();
 
+    // Helper function to safely get JWT token
+    const getJwtToken = () => {
+        try {
+            const jwtCookie = document.cookie
+                .split(';')
+                .find(c => c.trim().startsWith('jwt='));
+            
+            if (!jwtCookie) return null;
+            
+            const encodedJwt = jwtCookie.split('=')[1];
+            if (!encodedJwt) return null;
+            
+            const decodedJwt = decodeURIComponent(encodedJwt).replace('j:', '');
+            const parsedJwt = JSON.parse(decodedJwt);
+            
+            return parsedJwt.access_token;
+        } catch (error) {
+            console.error('Error parsing JWT token:', error);
+            return null;
+        }
+    };
+
     React.useEffect(() => {
+        const token = getJwtToken();
+        if (!token) {
+            console.warn('No valid JWT token found');
+            return;
+        }
+
         const socket = io(`${SOCKET_STATUS}/userstate`, {
             query: {
                 user_id: user_id,
             },
             extraHeaders: {
-                Authorization: JSON.parse(
-                    decodeURIComponent(
-                        document.cookie
-                            .split(';')
-                            .find(c => c.trim().startsWith('jwt='))
-                            ?.split('=')[1] || ''
-                    ).replace('j:', '')
-                ).access_token
+                Authorization: token
             }
         });
+
         if (user_id) {
             const updateOnGame = (users: any) => {
                 dispatch(setOnlineUsers(users));
@@ -74,20 +96,18 @@ export default function Navbar() {
                 socket.disconnect();
             };
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user_id]);
 
     React.useEffect(() => {
+        const token = getJwtToken();
+        if (!token) {
+            console.warn('No valid JWT token found');
+            return;
+        }
+
         const socket = io(`${SOCKET}/game`, {
             extraHeaders: {
-                Authorization: JSON.parse(
-                    decodeURIComponent(
-                        document.cookie
-                            .split(';')
-                            .find(c => c.trim().startsWith('jwt='))
-                            ?.split('=')[1] || ''
-                    ).replace('j:', '')
-                ).access_token
+                Authorization: token
             }
         });
 
@@ -109,7 +129,6 @@ export default function Navbar() {
             socket.off('onGame', updatenline);
             socket.disconnect();
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user_id]);
 
     return (
