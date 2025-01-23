@@ -8,7 +8,9 @@ export const chatReducer = (state: any, action: any) => {
     case "ADD_FRIEND":
       return {
         ...state,
-        newFriends: [...state.newFriends, action.data],
+        newFriends: state.newFriends.some((friend: { id: any; }) => friend.id === action.data.id)
+            ? state.newFriends
+            : [...state.newFriends, action.data]
       };
     case "REMOVE_FRIEND":
       return {
@@ -26,7 +28,9 @@ export const chatReducer = (state: any, action: any) => {
     case "ADD_GROUP":
       return {
         ...state,
-        newGroups: [...state.newGroups, action.data],
+        newGroups: state.newGroups.some((group: { id: any; }) => group.id === action.data.id)
+            ? state.newGroups
+            : [...state.newGroups, action.data]
       };
 
     // case "CHANGE_GROUP":
@@ -52,7 +56,9 @@ export const chatReducer = (state: any, action: any) => {
     case "ADD_USER":
       return {
         ...state,
-        users: [...state.users, action.data],
+        users: state.users.some((user: { id: any; }) => user.id === action.data.id)
+            ? state.users
+            : [...state.users, action.data]
       };
     case "REMOVE_USER":
       return {
@@ -68,7 +74,9 @@ export const chatReducer = (state: any, action: any) => {
     case "ADD_MEMBER":
       return {
         ...state,
-        newMembers: [...state.newMembers, action.data],
+        newMembers: state.newMembers.some((member: { id: any; }) => member.id === action.data.id)
+            ? state.newMembers
+            : [...state.newMembers, action.data]
       };
     case "REMOVE_MEMBER":
       return {

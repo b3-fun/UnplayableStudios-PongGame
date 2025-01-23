@@ -43,8 +43,12 @@ export const GlobalReducer = (state: any, action: any) => {
             newState.userInfo = { ...newState, updated: true };
             break;
         case 'UPDATE_MATCH_HISTORY':
-            newState.matchHistory = payload;
-            break;
+            return {
+                ...state,
+                matchHistory: payload.some((match: { id: any; }) => state.matchHistory.some((existing: { id: any; }) => existing.id === match.id))
+                    ? state.matchHistory
+                    : [...state.matchHistory, ...payload]
+            };
         case 'ONLINE_USERS':
             newState.online = payload;
             break;
