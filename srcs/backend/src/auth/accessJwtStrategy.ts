@@ -5,15 +5,12 @@ import { PrismaService } from 'src/prisma/prisma.service';
 import { Request, response } from 'express';
 
 const customExtractor = (req: Request) => {
-  //THis function returns the token from the cookie and uses the return vallue to verify it
-  let token = null;
-  if (req.cookies['jwt'] && req.cookies['jwt']['access_token'])
-  {
-    token = req.cookies['jwt']['access_token'];
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+    return req.headers.authorization.split(' ')[1];
   }
-  return token;
-
+  return null;
 };
+
 
 @Injectable()
 export class accessJwtStrategy extends PassportStrategy(Strategy, 'jwt') {

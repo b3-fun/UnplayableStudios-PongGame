@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, {AxiosRequestConfig} from 'axios';
 import { API } from '../constants';
 import {
     clearTwoFacQrCode,
@@ -12,8 +12,17 @@ import {
     storeUserInfo,
     twoFacQrCode,
 } from './Action';
+import {getJwtToken} from "../utils/token";
 
-axios.defaults.withCredentials = true;
+// Add axios interceptor to include Bearer token
+axios.interceptors.request.use((config: AxiosRequestConfig) => {
+    const token = getJwtToken();
+    if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+});
+axios.defaults.withCredentials = false; // No longer need credentials since using
 
 export const  URLS = {
     LOGIN: API + '/user/me',

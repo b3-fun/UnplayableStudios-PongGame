@@ -121,7 +121,7 @@ export class AuthController {
     }
 
     @Post('b3/:token')
-    async b3Auth(@Param('token') token: string, @Res({passthrough: true}) res) {
+    async b3Auth(@Param('token') token: string) {
         try {
             // Decode JWT token
             const decoded = this.AuthService.decodeB3Token(token);
@@ -136,21 +136,14 @@ export class AuthController {
             const found = await this.AuthService.createAccount(username, avatar);
             const twofa = !found.two_authentication;
 
-            const accessToken = this.AuthService.signToken(
+            const result = this.AuthService.signToken(
                 username,
                 found.user_id,
                 twofa,
                 true
             );
 
-            res.cookie('jwt', accessToken, {
-                httpOnly: false,
-                sameSite: 'none',
-                secure: true,
-                path: '/'
-            });
-
-            return res.redirect(process.env.CLIENT_URL)
+            return { access_token: result.access_token };
 
         } catch (error) {
             throw new UnauthorizedException('Token validation failed');

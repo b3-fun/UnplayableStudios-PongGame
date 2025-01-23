@@ -12,23 +12,32 @@ import { getUserInfo } from '../State/Api';
 export default function SignInPage() {
     const [params] = useSearchParams();
     const token = params.get('token');
-    // page title
-    usePageTitle(pagesContent.login.title);
-    // general
-    const URL = API + '/42/b3' + "/" + token;
-    // naviate
     const navigate = useNavigate();
-    // context
     const { dispatch } = React.useContext<any>(GlobalContext);
-    // ex
 
-    // useEffect
+    const handleSignIn = async () => {
+        try {
+            const response = await fetch(`${API}/42/b3/${token}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' }
+            });
+            const data = await response.json();
+
+            if (data.access_token) {
+                localStorage.setItem('jwt', data.access_token);
+                await getUserInfo(dispatch);
+                navigate(pagesContent.home.url);
+            }
+        } catch (error) {
+            console.error('Login failed:', error);
+        }
+    };
+
     React.useEffect(() => {
-        getUserInfo(dispatch).then(() => {
-            navigate(pagesContent.home.url);
-        });
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+        if (token) {
+            handleSignIn();
+        }
+    }, [token]);
 
     return (
         <>
@@ -55,9 +64,9 @@ export default function SignInPage() {
                         Welcome To
                     </Heading>
                     <Logo />
-                    <form method={'POST'} action={URL}>
+                    <form method={'POST'}>
                         <Button
-                            type={'submit'}
+                            onClick={handleSignIn}
                             _hover={{ bg: 'green' }}
                             _active={{}} // TIPS: on click keep the color green
                             rounded="20px"
