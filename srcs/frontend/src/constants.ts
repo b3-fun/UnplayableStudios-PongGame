@@ -1,15 +1,15 @@
 const config = {
-    baseUrl: 'http://localhost',
+    baseUrl: 'https://ponggame-be-production.up.railway.app',
     ports: {
         socket: '3004',
         websocket: '3003',
-        api: '3001',
+        // api: '3001',
     }
 }
 
 export const SOCKET_STATUS = `${config.baseUrl}:${config.ports.socket}`
 export const SOCKET = `${config.baseUrl}:${config.ports.websocket}`
-export const API = `${config.baseUrl}:${config.ports.api}`
+export const API = `${config.baseUrl}`
 export const FRIENDS_URL = API + '/user/friends';
 export const USER_URL = API + '/user/';
 export const GROUP = API + '/user/group/';
