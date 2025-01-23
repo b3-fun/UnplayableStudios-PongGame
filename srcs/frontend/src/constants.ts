@@ -2,10 +2,6 @@
 // const config = {
 //     baseUrl: 'http://localhost:3001',
 // }
-//
-// export const SOCKET_STATUS = `${config.baseUrl}`
-// export const SOCKET = `${config.baseUrl}`
-// export const API = `${config.baseUrl}`
 
 const config = {
     baseUrl: 'https://ponggame-be-production.up.railway.app',
