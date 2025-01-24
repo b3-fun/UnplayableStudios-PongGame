@@ -70,11 +70,10 @@ const ProfilePage = () => {
     const [three, setThree] = React.useState(false);
 
     const isOnline = (user_id: string) => {
-        console.log("isOnline:",user_id)
         if(user_id) {
             for (let i = 0; i < online.length; i++) {
                 const user = online[i];
-                if (user.user_id.toString() === user_id?.toString()) return true;
+                if (user?.user_id && user?.user_id.toString() === user_id?.toString()) return true;
             }
         }
         return false;

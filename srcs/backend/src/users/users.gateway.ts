@@ -69,7 +69,7 @@ export class UsersGateway
     for (let i = 0; i < this.online.length; i++) 
     {
       const user = this.online[i];
-      if (user.user_id === client.handshake.query.user_id.toString()) 
+      if ( client.handshake.query.user_id && user.user_id === client.handshake.query.user_id.toString()) 
       {
         this.online.splice(i, 1);
         break;

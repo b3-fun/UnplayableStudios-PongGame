@@ -6,8 +6,7 @@ import Tabs from './Tabs';
 import Messaging from './Messaging';
 import { ChatContext } from '../State/ChatProvider';
 import NewChannel from './NewChannel';
-import { ALL_USERS, API, FRIENDS_URL, GROUP, USER_URL, MY_GROUPS, ALL_GROUPS, DM } from '../constants';
-// import { GlobalContext } from "../State/GlobalProvider";
+import { FRIENDS_URL, GROUP, USER_URL, MY_GROUPS, ALL_GROUPS } from '../constants';
 import axios from 'axios';
 import { GlobalContext } from '../State/Provider';
 import { newNotification } from '../State/Action';
@@ -42,7 +41,6 @@ const SideBar = () => {
     const { newChannel } = useContext<any>(ChatContext);
     const { dispatch, state, socket, setSelectedChat } = useContext<any>(ChatContext);
     const globalDispatch = useContext<any>(GlobalContext).dispatch;
-    // const { newGroups, newFriends } = state;
     const { data } = React.useContext<any>(GlobalContext);
     const { userInfo } = data;
 
@@ -119,15 +117,6 @@ const SideBar = () => {
     }, []);
 
     React.useEffect(() => {
-        axios.get(ALL_USERS).then((response: any) => {
-            dispatch({
-                type: 'SET_USERS',
-                data: response.data,
-            });
-        });
-    }, []);
-
-    React.useEffect(() => {
         axios.get(ALL_GROUPS).then((response: any) => {
             for (var i = 0; i != response.data.length; i++) {
                 const room = {
@@ -149,7 +138,6 @@ const SideBar = () => {
         <>
             <Flex
                 w={['100%', '100%', '70%', '50%', '50%']}
-                // w={'100%'}
                 _light={{ boxShadow: 'md' }}
                 _dark={{ boxShadow: 'dark-lg' }}
                 rounded="30px"
@@ -158,7 +146,11 @@ const SideBar = () => {
                 p={5}
                 overflow={'auto'}
             >
-                {newChannel ? <NewChannel /> : !selectedChat ? <ChatTabs /> : <Messaging />}
+                {newChannel ? <NewChannel /> : !selectedChat ? (
+                    <ChatTabs />
+                ) : (
+                    <Messaging />
+                )}
             </Flex>
         </>
     );

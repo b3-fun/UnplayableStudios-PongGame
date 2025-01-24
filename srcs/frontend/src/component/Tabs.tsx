@@ -47,6 +47,8 @@ function Tabs() {
     const [password, setPassword] = useState<any>('');
     const [group, setGroup] = useState<any>(null);
     const { data } = useContext<any>(GlobalContext);
+    const [currentPage, setCurrentPage] = React.useState(1);
+    const [isLoading, setIsLoading] = React.useState(false);
 
     function isFriend(id: any) {
         if (!data.userInfo) return false;
@@ -131,6 +133,47 @@ function Tabs() {
             .catch((err) => {
             });
     }
+
+    const loadUsers = async (page: number = 1) => {
+        try {
+            setIsLoading(true);
+            const response = await axios.get(`${ALL_USERS}?page=${page}&limit=10`);
+            
+            if (page === 1) {
+                dispatch({
+                    type: 'SET_USERS',
+                    data: response.data,
+                });
+            } else {
+                response.data.data.forEach((user: any) => {
+                    const userData = {
+                        user_id: user.user_id,
+                        user_name: user.user_name,
+                        user_avatar: user.user_avatar
+                    };
+                    dispatch({
+                        type: 'ADD_USER',
+                        data: userData,
+                    });
+                });
+            }
+            setCurrentPage(page);
+        } catch (error) {
+            console.error('Error loading users:', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const loadMoreUsers = () => {
+        if (!isLoading && state.usersMeta && currentPage < state.usersMeta.lastPage) {
+            loadUsers(currentPage + 1);
+        }
+    };
+
+    React.useEffect(() => {
+        loadUsers(1);
+    }, []);
 
     return (
         <>
@@ -222,38 +265,53 @@ function Tabs() {
                         </TabPanel>
                         <TabPanel h={'100%'} w={'100%'} m={0} p={0} overflow={'auto'}>
                             <VStack pb={10} spacing={0} w={'100%'}>
-                                {users.length ? (
-                                    users.map((user: any, index: any) =>
-                                        !isFriend(user.user_id) ? (
-                                            <HStack
-                                                p={5}
-                                                alignItems={'center'}
-                                                _hover={{ bg: value }}
-                                                rounded={5}
-                                                h={'4.5em'}
-                                                w={'100%'}
-                                                key={index.toString()}
-                                            >
-                                                <ChakraAvatar name={user.user_name.toString()} src={user.user_avatar}></ChakraAvatar>
-                                                <Text>
-                                                    {user.user_name.length > 10 ? user.user_name.slice(0, 10) + '...' : user.user_name}
-                                                </Text>
-                                                <Tooltip label={'send Friend request'} openDelay={500}>
-                                                    <IconButton
-                                                        onClick={() => {
-                                                            sendFriendReq(user.user_id);
-                                                        }}
-                                                        fontSize={18}
-                                                        rounded={30}
-                                                        color={'green'}
-                                                        variant={'ghost'}
-                                                        aria-label={'new channel'}
-                                                        icon={<AiOutlineUserAdd />}
+                                {users && users.length ? (
+                                    <>
+                                        {users.map((user: any) =>
+                                            !isFriend(user.user_id) ? (
+                                                <HStack
+                                                    p={5}
+                                                    alignItems={'center'}
+                                                    _hover={{ bg: value }}
+                                                    rounded={5}
+                                                    h={'4.5em'}
+                                                    w={'100%'}
+                                                    key={user.user_id.toString()}
+                                                >
+                                                    <ChakraAvatar 
+                                                        name={user.user_name.toString()} 
+                                                        src={user.user_avatar}
                                                     />
-                                                </Tooltip>
-                                            </HStack>
-                                        ) : undefined
-                                    )
+                                                    <Text>
+                                                        {user.user_name.length > 10 
+                                                            ? user.user_name.slice(0, 10) + '...' 
+                                                            : user.user_name}
+                                                    </Text>
+                                                    <Tooltip label={'send Friend request'} openDelay={500}>
+                                                        <IconButton
+                                                            onClick={() => sendFriendReq(user.user_id)}
+                                                            fontSize={18}
+                                                            rounded={30}
+                                                            color={'green'}
+                                                            variant={'ghost'}
+                                                            aria-label={'new channel'}
+                                                            icon={<AiOutlineUserAdd />}
+                                                        />
+                                                    </Tooltip>
+                                                </HStack>
+                                            ) : null
+                                        )}
+                                        {state.usersMeta && currentPage < state.usersMeta.lastPage && (
+                                            <Button
+                                                mt={4}
+                                                onClick={loadMoreUsers}
+                                                isLoading={isLoading}
+                                                loadingText="Loading..."
+                                            >
+                                                Load More Users
+                                            </Button>
+                                        )}
+                                    </>
                                 ) : (
                                     <Flex h={'100%'} justifyContent={'center'} alignItems={'center'}>
                                         <Text>No Users yet</Text>

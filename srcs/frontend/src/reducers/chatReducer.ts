@@ -51,12 +51,13 @@ export const chatReducer = (state: any, action: any) => {
     case "SET_USERS":
       return {
         ...state,
-        users: action.data,
+        users: action.data.data,
+        usersMeta: action.data.meta,
       };
     case "ADD_USER":
       return {
         ...state,
-        users: state.users.some((user: { id: any; }) => user.id === action.data.id)
+        users: state.users.some((u: any) => u.user_id === action.data.user_id)
             ? state.users
             : [...state.users, action.data]
       };

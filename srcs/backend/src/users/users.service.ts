@@ -4,6 +4,7 @@ import { Http2ServerRequest } from 'http2';
 import { throwError } from 'rxjs';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { userDataDto, RoomInfoDto } from './DTO/username.dto';
+import { PaginatedUsers } from './types/pagination.types';
 const bcrypt = require('bcrypt');
 
 @Injectable()
@@ -355,15 +356,42 @@ export class UsersService {
         return members;
     }
 
-    async getAllUsers(me) {
-        const users = await this.prisma.user.findMany({
+    async getAllUsers(me: number, page: number = 1, limit: number = 10): Promise<PaginatedUsers> {
+        // Get total count
+        const total = await this.prisma.user.count({
             where: {
                 NOT: {
                     user_id: Number(me),
                 },
             },
         });
-        return users;
+
+        // Calculate skip and take
+        const skip = (page - 1) * limit;
+        const lastPage = Math.ceil(total / limit);
+
+        // Get paginated users
+        const users = await this.prisma.user.findMany({
+            where: {
+                NOT: {
+                    user_id: Number(me),
+                },
+            },
+            skip,
+            take: limit,
+            orderBy: {
+                user_id: 'asc',
+            },
+        });
+
+        return {
+            data: users,
+            meta: {
+                total,
+                page,
+                lastPage,
+            }
+        };
     }
     async getAllFriends(login: number) {
         const frineds = await this.prisma.friend.findMany({

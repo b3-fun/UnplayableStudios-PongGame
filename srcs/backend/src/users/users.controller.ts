@@ -32,6 +32,7 @@ import { CloudinaryService } from './clodinary/clodinary.service';
 import { get } from 'http';
 import { ApiProperty, ApiTags } from '@nestjs/swagger';
 import { IsMimeType } from 'class-validator';
+import { PaginatedUsers } from './types/pagination.types';
 
 // ! Before End, Check if the user is extracted from JWT, and remove static User (1)
 
@@ -238,11 +239,19 @@ export class UsersController {
 
     @Get('list/all')
     @HttpCode(200)
-    async GetAllUsers(@Req() req) {
-        // add JWT ID user
+    async GetAllUsers(
+        @Req() req,
+        @Query('page') page: string = '1',
+        @Query('limit') limit: string = '10',
+    ): Promise<PaginatedUsers> {
         const user_info = await this.UsersService.getUserbyLogin(req.user['userLogin']);
         const user = user_info.user_id;
-        return await this.UsersService.getAllUsers(user);
+        
+        return await this.UsersService.getAllUsers(
+            user,
+            parseInt(page),
+            parseInt(limit)
+        );
     }
     @Get('list/all_blocked')
     @HttpCode(200)
