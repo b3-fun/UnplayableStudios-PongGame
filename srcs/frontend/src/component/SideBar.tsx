@@ -30,7 +30,7 @@ const ChatTabs = () => {
     });
     return (
         <>
-            <SearchBar />
+            {/*<SearchBar />*/}
             <AnimatePresence>{!isSearch ? <Tabs /> : undefined}</AnimatePresence>
         </>
     );
