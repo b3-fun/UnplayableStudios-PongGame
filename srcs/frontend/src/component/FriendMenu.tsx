@@ -67,17 +67,21 @@ const FriendMenu = () => {
     };
 
     const isOnline = (user_id: string) => {
-        for (let i = 0; i < online.length; i++) {
-            const user = online[i];
-            if (user.user_id.toString() === user_id.toString()) return true;
+        if(user_id) {
+            for (let i = 0; i < online.length; i++) {
+                const user = online[i];
+                if (user && user.user_id && user.user_id.toString() === user_id.toString()) return true;
+            }
         }
         return false;
     };
 
     const isOnGame = (user_id: string) => {
-        for (let i = 0; i < on_game.length; i++) {
-            const user = on_game[i];
-            if (user && user.toString() === user_id.toString()) return true;
+        if(user_id) {
+            for (let i = 0; i < on_game.length; i++) {
+                const user = on_game[i];
+                if (user && user.toString() === user_id.toString()) return true;
+            }
         }
         return false;
     };
