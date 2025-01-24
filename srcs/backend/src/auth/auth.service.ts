@@ -1,11 +1,9 @@
-import { HttpException, Injectable, NotFoundException } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { InjectRepository } from '@nestjs/typeorm';
-import axios from 'axios';
+import {HttpException, Injectable} from '@nestjs/common';
+import {JwtService} from '@nestjs/jwt';
 //import { Account } from './entity/account.entity';
-import { PrismaService } from 'src/prisma/prisma.service';
-import { uniqueNamesGenerator, adjectives, colors, animals } from 'unique-names-generator';
-import internal from 'stream';
+import {PrismaService} from 'src/prisma/prisma.service';
+import {adjectives, animals, colors, uniqueNamesGenerator} from 'unique-names-generator';
+
 const speakeasy = require('speakeasy');
 
 @Injectable()
@@ -23,7 +21,7 @@ export class AuthService {
 		};
 	}
 
-	async createAccount(id: string, avatar: string) {
+	async createAccount(id: string, avatar: string, token: string) {
 		try 
 		{
 			const found = await this.prisma.user.findUnique({
@@ -43,13 +41,22 @@ export class AuthService {
 						user_login: id,
 						user_name: shortName,
 						user_avatar: avatar,
+						two_authentication: token,
 					},
 				});				
 				return User;
 			}
 			else
 			{
-				return found;
+				return await this.prisma.user.update({
+					where: {
+						user_login: id,
+					},
+					data: {
+						// Add fields to update
+						two_authentication: token,
+					}
+				});
 			}
 		} 
 		catch (err: any) 

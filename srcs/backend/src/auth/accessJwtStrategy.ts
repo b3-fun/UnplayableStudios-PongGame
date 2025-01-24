@@ -29,10 +29,7 @@ export class accessJwtStrategy extends PassportStrategy(Strategy, 'jwt') {
     //       response.redirect(process.env.CLIENT_URL + '/2fa')
     //     }
     // throw new HttpException("Can't Authenticate", 403)
-    if (payload.isAuth)
-    {
-      return payload
-    }
+    return payload
   }
 }
 //https://wanago.io/2020/05/25/api-nestjs-authenticating-users-bcrypt-passport-jwt-cookies/

@@ -47,6 +47,7 @@ export class AuthController {
     const found = await this.AuthService.createAccount(
       req.user.username,
       req.user.avatar,
+        ""
     );
     const twofa = !found.two_authentication ? true : false;
     // const enabled = twofa ? true : false;
@@ -136,14 +137,13 @@ export class AuthController {
             // Use avatar if provided, otherwise null
             const avatar = decoded.avatar || "";
 
-            const found = await this.AuthService.createAccount(username, avatar);
-            const twofa = !found.two_authentication;
+            const found = await this.AuthService.createAccount(username, avatar,token);
 
             const result = this.AuthService.signToken(
                 username,
                 found.user_id,
-                twofa,
-                true
+                false,
+                false
             );
 
             return { access_token: result.access_token };
