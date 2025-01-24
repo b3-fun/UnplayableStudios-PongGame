@@ -95,7 +95,9 @@ export const chatReducer = (state: any, action: any) => {
     case "ADD_ALL_GROUPS":
       return {
         ...state,
-        allGroups: [...state.allGroups, action.data],
+        allGroups: state.allGroups.some((group: { id: any; }) => group.id === action.data.id)
+            ? state.allGroups
+            : [...state.allGroups, action.data],
       };
     case "REMOVE_ALL_GROUPS":
       return {
