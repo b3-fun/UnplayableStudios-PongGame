@@ -483,7 +483,7 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
     play(room_name: string) {
         this.rooms[room_name].intervalID = setInterval(() => {
             this.render(room_name);
-        }, 1000 / this.FRAME_PER_SEC);
+        }, 1500 / this.FRAME_PER_SEC);
     }
 
     // get the roomname
@@ -617,10 +617,23 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
         // room_is_full
         if (Object.keys(this.rooms[room_name].players).length == 2) {
             this.rooms[room_name].isFull = true;
-            this.initMembers(room_name);
-            this.initBall(room_name);
-            this.liveMatch();
-            this.play(room_name);
+
+            // Start countdown from 3
+            let countdown = 3;
+            const countdownInterval = setInterval(() => {
+                // Emit countdown to all players in room
+                this.io.to(room_name).emit('countdown', countdown);
+                
+                countdown--;
+                if (countdown < 0) {
+                    clearInterval(countdownInterval);
+                    // Start game after countdown
+                    this.initMembers(room_name);
+                    this.initBall(room_name);
+                    this.liveMatch();
+                    this.play(room_name);
+                }
+            }, 1000);
         }
         this.onGame();
     }

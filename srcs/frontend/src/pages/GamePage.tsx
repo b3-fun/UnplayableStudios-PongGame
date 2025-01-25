@@ -1,4 +1,4 @@
-import { Avatar, Badge, Box, Flex, Grid, GridItem, HStack, Icon, Kbd, Spinner, Text, useMediaQuery, useTheme, VStack } from '@chakra-ui/react';
+import { Avatar, Badge, Box, Flex, Grid, GridItem, HStack, Icon, Kbd, Spinner, Text, useMediaQuery, useTheme, VStack, Center } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import React from 'react';
 import { BsFillArrowDownSquareFill, BsFillArrowUpSquareFill } from 'react-icons/bs';
@@ -46,6 +46,8 @@ export default function GamePage() {
     // context
     const { data, dispatch } = React.useContext<any>(GlobalContext);
     const { userInfo, opponent_id, playing_with_friend } = data;
+    // Add state for countdown
+    const [countdown, setCountdown] = React.useState<number | null>(null);
 
     // useEffect
     React.useEffect(() => {
@@ -232,6 +234,12 @@ export default function GamePage() {
             socket.on('game', game);
             socket.on('notAllowed', notAllowed);
             socket.on('cancelGame', cancelGame);
+            socket.on('countdown', (count: number) => {
+                setCountdown(count);
+                if (count === 0) {
+                    setCountdown(null);
+                }
+            });
 
             // move
             document.addEventListener('keydown', moveKey);
@@ -295,6 +303,7 @@ export default function GamePage() {
             });
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [containerRef, width]);
+
     return (
         <>
             <VStack alignContent="center" justifyContent="center">
@@ -318,13 +327,32 @@ export default function GamePage() {
                         </HStack>
                     </GridItem>
                 </Grid>
-                <Box w="100%" ref={containerRef} flexDirection="column" display="flex" alignItems="center" justifyContent="center">
-                    {!play && (
+                <Box w="100%" ref={containerRef} flexDirection="column" display="flex" alignItems="center" justifyContent="center" position="relative">
+                    {!play && !countdown && (
                         <Flex w="100%" alignItems="center" h="10rem" justifyContent="center">
                             <Spinner></Spinner>
                         </Flex>
                     )}
                     <motion.canvas width={canvasWidth} height="400" ref={canvasRef} />
+                    {countdown !== null && (
+                        <Center position="absolute" top={0} left={0} right={0} bottom={0} zIndex={2}>
+                            <Box
+                                bg="blackAlpha.700"
+                                color="white"
+                                fontSize="8xl"
+                                fontWeight="bold"
+                                p="6"
+                                borderRadius="full"
+                                width="200px"
+                                height="200px"
+                                display="flex"
+                                alignItems="center"
+                                justifyContent="center"
+                            >
+                                {countdown}
+                            </Box>
+                        </Center>
+                    )}
                 </Box>
                 {play && (
                     <Badge mt={5} borderRadius="full" fontSize="3xl" px={3}>
