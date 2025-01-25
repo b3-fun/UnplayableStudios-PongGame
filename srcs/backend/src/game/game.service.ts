@@ -43,7 +43,7 @@ export class GameService {
         await basementSendCustomActivity({
           launcherJwt: winnerAuth,
           label: this.getWinnerMessage(gameData),
-          eventId: "end"
+          eventId: "match"
         });
       } catch (error) {
         console.error("Winner activity failed:", error);
@@ -55,7 +55,7 @@ export class GameService {
         await basementSendCustomActivity({
           launcherJwt: loserAuth,
           label: this.getLoserMessage(gameData),
-          eventId: "end"
+          eventId: "match"
         });
       } catch (error) {
         console.error("Loser activity failed:", error);
@@ -115,7 +115,7 @@ export class GameService {
         await basementSendCustomActivity({
           launcherJwt: user.two_authentication,
           label: msg,
-          eventId: "start"
+          eventId: "match"
         });
       } catch (error) {
         console.error("Live activity failed:", error);
