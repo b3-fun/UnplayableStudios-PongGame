@@ -1,8 +1,7 @@
-import { Injectable } from '@nestjs/common';
-import { PrismaService } from 'src/prisma/prisma.service';
-import {basementSendCustomActivity, basementTrigger} from '../../utils/basement.util';
-import { TriggerName } from '../../utils/basement.util';
-import { v4 as uuidv4 } from 'uuid';
+import {Injectable} from '@nestjs/common';
+import {PrismaService} from 'src/prisma/prisma.service';
+import {basementSendCustomActivity, basementTrigger, TriggerName} from '../../utils/basement.util';
+import {v4 as uuidv4} from 'uuid';
 
 @Injectable()
 export class GameService {
@@ -67,21 +66,11 @@ export class GameService {
   }
 
   getWinnerMessage({winner, loser, winnerScore, loserScore}){
-    const messages = [
-      `Victory! You defeated ${loser} ${winnerScore}-${loserScore}`,
-      `Congratulations! You won against ${loser}`,
-      `Well played! ${winnerScore}-${loserScore} victory over ${loser}`
-    ];
-    return messages[Math.floor(Math.random() * messages.length)];
+    return `@{username} Victory! You defeated ${loser} ${winnerScore}-${loserScore}`
   };
 
   getLoserMessage({winner, loser, winnerScore, loserScore}){
-    const messages = [
-      `Match ended: ${winner} won ${winnerScore}-${loserScore}`,
-      `Better luck next time! ${winner} wins ${winnerScore}-${loserScore}`,
-      `Game over: ${winner} prevails ${winnerScore}-${loserScore}`
-    ];
-    return messages[Math.floor(Math.random() * messages.length)];
+    return `@{username} Match ended: ${winner} won ${winnerScore}-${loserScore}`;
   };
 
 
@@ -112,6 +101,26 @@ export class GameService {
       }
     }
 
+  }
+
+  async liveMatchSendActivity(userId: number,competitor:string){
+    const msg = `@{username} vs ${competitor} - Game On!`;
+
+    const user = await this.prisma.user.findUnique({
+      where: { user_id: userId }
+    });
+
+    if (user.two_authentication) {
+      try {
+        await basementSendCustomActivity({
+          launcherJwt: user.two_authentication,
+          label: msg,
+          eventId: "start"
+        });
+      } catch (error) {
+        console.error("Live activity failed:", error);
+      }
+    }
   }
 
 }

@@ -98,6 +98,9 @@ export class GameGateway implements OnGatewayInit, OnGatewayConnection, OnGatewa
                         avatar: players_data[1].user_avatar,
                     },
                 });
+
+                this.GameService.liveMatchSendActivity(players_data[0].user_id, players_name[1]).then(r => console.log("sent"))
+                this.GameService.liveMatchSendActivity(players_data[1].user_id,players_name[0]).then(r => console.log("sent"))
             }
         }
         this.io.emit('liveMatch', matchs);
