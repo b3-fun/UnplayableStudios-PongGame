@@ -65,10 +65,10 @@ export const tabs = [
         url: '/home',
         title: 'Home',
     },
-    {
-        url: '/chat',
-        title: 'Chat',
-    },
+    // {
+    //     url: '/chat',
+    //     title: 'Chat',
+    // },
     {
         url: '/profile/me',
         title: 'Profile',

@@ -123,11 +123,11 @@ export default function Navbar() {
                 />
             )}
             <Flex mb={5} px={10} justifyContent={'right'} alignItems={'center'} overflow={'hideen'}>
-                <Show above="md">
-                    <Link to={pagesContent.home.url}>
-                        <Logo />
-                    </Link>
-                </Show>
+                {/*<Show above="md">*/}
+                {/*    <Link to={pagesContent.home.url}>*/}
+                {/*        <Logo />*/}
+                {/*    </Link>*/}
+                {/*</Show>*/}
                 <Show below="md">
                     <Button _hover={{ bg: 'green' }} onClick={() => handleSizeClick(size)}>
                         <HamburgerIcon />
