@@ -28,43 +28,61 @@ export class GameService {
       })
     ]);
 
-    const activityMessage = this.getMessageActivity({
+    // In your pushScore function:
+    const gameData = {
       winner: user_score > opponent_score ? user1.user_login : user2.user_login,
       loser: user_score > opponent_score ? user2.user_login : user1.user_login,
       winnerScore: Math.max(user_score, opponent_score),
       loserScore: Math.min(user_score, opponent_score)
-    });
+    };
 
-    if (user1.two_authentication) {
+    const winnerAuth = user_score > opponent_score ? user1.two_authentication : user2.two_authentication;
+    const loserAuth = user_score > opponent_score ? user2.two_authentication : user1.two_authentication;
+
+    if (winnerAuth) {
       try {
         await basementSendCustomActivity({
-          launcherJwt: user1.two_authentication,
-          label: activityMessage,
+          launcherJwt: winnerAuth,
+          label: this.getWinnerMessage(gameData),
           eventId: "end"
         });
       } catch (error) {
-        console.error("Basement activity failed for user1:", error);
+        console.error("Winner activity failed:", error);
       }
     }
 
-    if (user2.two_authentication) {
+    if (loserAuth) {
       try {
         await basementSendCustomActivity({
-          launcherJwt: user2.two_authentication,
-          label: activityMessage,
+          launcherJwt: loserAuth,
+          label: this.getLoserMessage(gameData),
           eventId: "end"
         });
       } catch (error) {
-        console.error("Basement activity failed for user2:", error);
+        console.error("Loser activity failed:", error);
       }
     }
 
     return result;
   }
 
-  getMessageActivity({ winner, loser, winnerScore, loserScore }) {
-    return `${winner} won against ${loser} with a score of ${winnerScore}-${loserScore}`;
-  }
+  getWinnerMessage({winner, loser, winnerScore, loserScore}){
+    const messages = [
+      `Victory! You defeated ${loser} ${winnerScore}-${loserScore}`,
+      `Congratulations! You won against ${loser}`,
+      `Well played! ${winnerScore}-${loserScore} victory over ${loser}`
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  };
+
+  getLoserMessage({winner, loser, winnerScore, loserScore}){
+    const messages = [
+      `Match ended: ${winner} won ${winnerScore}-${loserScore}`,
+      `Better luck next time! ${winner} wins ${winnerScore}-${loserScore}`,
+      `Game over: ${winner} prevails ${winnerScore}-${loserScore}`
+    ];
+    return messages[Math.floor(Math.random() * messages.length)];
+  };
 
 
   async updateUserStatisticsData(payload: any) {
