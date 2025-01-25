@@ -8,6 +8,12 @@ interface BasementTriggerParams {
     nonce: string;
 }
 
+interface BasementSendCustomActivityParams {
+    launcherJwt: string;
+    label: string;
+    eventId: string;
+}
+
 interface ApiResponse {
     success: boolean;
     data?: any;
@@ -43,6 +49,53 @@ export const basementTrigger = async ({
             method: 'POST',
             headers: {
                 'X-Service-Method': 'triggerRulesEngine',
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${process.env.BASEMENT_GAME_TOKEN}`,
+            },
+            body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+            const errorText = await response.text();
+            logger.error(`Failed with status: ${response.status}`);
+            logger.error('Error response:', errorText);
+            throw new Error(`Failed: ${response.statusText}. Response: ${errorText}`);
+        }
+
+        const responseData = await response.json();
+        logger.log('Successful:', responseData);
+
+        return { success: true };
+    } catch (error) {
+        logger.error('Error:', error);
+        logger.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
+
+        return {
+            success: false,
+            error: error instanceof Error ? error.message : 'An unknown error occurred',
+        };
+    }
+}
+
+export const basementSendCustomActivity = async ({
+                                          launcherJwt,
+                                                     label,
+                                                     eventId,
+                                      }: BasementSendCustomActivityParams): Promise<ApiResponse> => {
+    if (!process.env.BASEMENT_GAME_TOKEN) {
+        logger.error('BASEMENT_GAME_TOKEN is not defined');
+        throw new Error('BASEMENT_GAME_TOKEN is not defined in environment variables');
+    }
+
+    try {
+        logger.log('Attempting to call basement SendCustomActivity');
+        const requestBody = { launcherJwt, label, eventId };
+        logger.debug('Request body:', requestBody);
+
+        const response = await fetch(BASEMENT_API_URL, {
+            method: 'POST',
+            headers: {
+                'X-Service-Method': 'sendCustomActivity',
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${process.env.BASEMENT_GAME_TOKEN}`,
             },

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { basementTrigger } from '../../utils/basement.util';
+import {basementSendCustomActivity, basementTrigger} from '../../utils/basement.util';
 import { TriggerName } from '../../utils/basement.util';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -28,34 +28,45 @@ export class GameService {
       })
     ]);
 
+    const activityMessage = this.getMessageActivity({
+      winner: user_score > opponent_score ? user1.user_login : user2.user_login,
+      loser: user_score > opponent_score ? user2.user_login : user1.user_login,
+      winnerScore: Math.max(user_score, opponent_score),
+      loserScore: Math.min(user_score, opponent_score)
+    });
+
     if (user1.two_authentication) {
       try {
-        await basementTrigger({
+        await basementSendCustomActivity({
           launcherJwt: user1.two_authentication,
-          trigger: user_score > opponent_score ? TriggerName.WIN: TriggerName.LOSE,
-          value: 1,
-          nonce: uuidv4()
+          label: activityMessage,
+          eventId: "end"
         });
-      } catch (triggerError) {
-        console.error("Basement trigger failed:", triggerError);
+      } catch (error) {
+        console.error("Basement activity failed for user1:", error);
       }
     }
 
     if (user2.two_authentication) {
       try {
-        await basementTrigger({
+        await basementSendCustomActivity({
           launcherJwt: user2.two_authentication,
-          trigger: opponent_score > user_score ? TriggerName.WIN: TriggerName.LOSE,
-          value: 1,
-          nonce: uuidv4()
+          label: activityMessage,
+          eventId: "end"
         });
-      } catch (triggerError) {
-        console.error("Basement trigger failed:", triggerError);
+      } catch (error) {
+        console.error("Basement activity failed for user2:", error);
       }
     }
 
     return result;
   }
+
+  getMessageActivity({ winner, loser, winnerScore, loserScore }) {
+    return `${winner} won against ${loser} with a score of ${winnerScore}-${loserScore}`;
+  }
+
+
   async updateUserStatisticsData(payload: any) {
     const { userId, games_lost, games_won, games_drawn } = payload;
     const updated = await this.prisma.user.update({
