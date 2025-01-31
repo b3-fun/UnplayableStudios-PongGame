@@ -4,73 +4,73 @@
 // }
 
 const config = {
-  baseUrl: "https://ponggame-be-production.up.railway.app",
+  baseUrl: 'https://ponggame-be-production.up.railway.app',
 };
 
 export const SOCKET_STATUS = `${config.baseUrl}`;
 export const SOCKET = `${config.baseUrl}`;
 export const API = `${config.baseUrl}`;
 
-export const FRIENDS_URL = API + "/user/friends";
-export const USER_URL = API + "/user/";
-export const GROUP = API + "/user/group/";
-export const MY_GROUPS = API + "/user/group/member";
-export const MEMBERS = API + "/user/members/";
-export const DELETE_ROOM = API + "/user/group/";
-export const BLOCK_DM = API + "/user/block/";
-export const BLOCK_MEMBER = API + "/user/group/block/";
-export const FRIEND_REQ = API + "/user/add/";
-export const ALL_USERS = API + "/user/list/all";
-export const ADD_MEMBER = API + "/user/group/add/";
-export const UPDATE_GROUP = API + "/user/group/update/";
-export const ALL_GROUPS = API + "/user/group/all";
-export const DM = API + "/user/dm/";
-export const MESSAGES = API + "/user/msg/";
-export const BLOCKED_USERS = API + "/user/list/all_blocked";
+export const FRIENDS_URL = API + '/user/friends';
+export const USER_URL = API + '/user/';
+export const GROUP = API + '/user/group/';
+export const MY_GROUPS = API + '/user/group/member';
+export const MEMBERS = API + '/user/members/';
+export const DELETE_ROOM = API + '/user/group/';
+export const BLOCK_DM = API + '/user/block/';
+export const BLOCK_MEMBER = API + '/user/group/block/';
+export const FRIEND_REQ = API + '/user/add/';
+export const ALL_USERS = API + '/user/list/all';
+export const ADD_MEMBER = API + '/user/group/add/';
+export const UPDATE_GROUP = API + '/user/group/update/';
+export const ALL_GROUPS = API + '/user/group/all';
+export const DM = API + '/user/dm/';
+export const MESSAGES = API + '/user/msg/';
+export const BLOCKED_USERS = API + '/user/list/all_blocked';
 
 export const pagesContent = {
   home: {
-    url: "/home",
-    title: "Pong | Welcome",
+    url: '/home',
+    title: 'Pong | Welcome',
   },
   login: {
-    url: "/",
-    title: "Pong | Log In",
+    url: '/',
+    title: 'Pong | Log In',
   },
   profile: {
-    url: "/profile",
-    title: "Pong | Profile",
+    url: '/profile',
+    title: 'Pong | Profile',
   },
   chat: {
-    url: "/chat",
-    title: "Pong | Chat",
+    url: '/chat',
+    title: 'Pong | Chat',
   },
   play: {
-    url: "/play",
-    title: "Pong | Play",
+    url: '/play',
+    title: 'Pong | Play',
   },
   watch: {
-    url: "/watch",
-    title: "Pong | watch",
+    url: '/watch',
+    title: 'Pong | watch',
   },
   twoFa: {
-    url: "/2fa",
-    title: "Pong | Two fact auth",
+    url: '/2fa',
+    title: 'Pong | Two fact auth',
   },
 };
 
 export const tabs = [
   {
-    url: "/home",
-    title: "Home",
+    url: '/home',
+    title: 'Home',
   },
   // {
   //     url: '/chat',
   //     title: 'Chat',
   // },
   {
-    url: "/profile/me",
-    title: "Profile",
+    url: '/profile/me',
+    title: 'Profile',
   },
 ];
 

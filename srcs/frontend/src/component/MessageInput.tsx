@@ -6,68 +6,71 @@ import { SOCKET } from '../constants';
 import { io } from 'socket.io-client';
 import { GlobalContext } from '../State/Provider';
 import { newNotification } from '../State/Action';
-import { Cookies } from 'react-cookie'
-import {getJwtToken} from "../utils/token";
-
+import { Cookies } from 'react-cookie';
+import { getJwtToken } from '../utils/token';
 
 const MessageInput = () => {
-    const globalDispatch = useContext<any>(GlobalContext).dispatch;
-    const [typingMessage, setTypingMessage] = useState<any>('');
-    const msgInputBg = useColorModeValue('white', 'rgb(33,33,33)');
-    // const { socket } = useContext<any>(ChatContext);
-    const { selectedChat } = useContext<any>(ChatContext);
-    const { state } = useContext<any>(ChatContext);
-    const { roomDm } = state;
-    const { data } = React.useContext<any>(GlobalContext);
-    const { userInfo } = data;
+  const globalDispatch = useContext<any>(GlobalContext).dispatch;
+  const [typingMessage, setTypingMessage] = useState<any>('');
+  const msgInputBg = useColorModeValue('white', 'rgb(33,33,33)');
+  // const { socket } = useContext<any>(ChatContext);
+  const { selectedChat } = useContext<any>(ChatContext);
+  const { state } = useContext<any>(ChatContext);
+  const { roomDm } = state;
+  const { data } = React.useContext<any>(GlobalContext);
+  const { userInfo } = data;
 
-    function sendMessageHandler() {
-        if (typingMessage.trim()) {
-            const token = getJwtToken();
-            const payload = {
-                room_id: selectedChat.chat === 'F' ? roomDm : selectedChat.id,
-                message: typingMessage.trim(),
-                userId: userInfo.user_id,
-            };
-            const socket = io(SOCKET + '/dm', {
-
-                extraHeaders: {
-                    Authorization: token
-                }
-            });
-            socket.emit('message', payload);
-            socket.on('imMuted', (payload: any) => {
-                globalDispatch(newNotification({ type: 'Error', message: 'You are muted for ' + payload.time + ' min' }));
-            });
-        }
-        setTypingMessage('');
+  function sendMessageHandler() {
+    if (typingMessage.trim()) {
+      const token = getJwtToken();
+      const payload = {
+        room_id: selectedChat.chat === 'F' ? roomDm : selectedChat.id,
+        message: typingMessage.trim(),
+        userId: userInfo.user_id,
+      };
+      const socket = io(SOCKET + '/dm', {
+        extraHeaders: {
+          Authorization: token,
+        },
+      });
+      socket.emit('message', payload);
+      socket.on('imMuted', (payload: any) => {
+        globalDispatch(
+          newNotification({
+            type: 'Error',
+            message: 'You are muted for ' + payload.time + ' min',
+          }),
+        );
+      });
     }
+    setTypingMessage('');
+  }
 
-    const keyDownHandler = (event: any) => {
-        if (event.key === 'Enter') {
-            event.preventDefault();
+  const keyDownHandler = (event: any) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
 
-            sendMessageHandler();
-        }
-    };
+      sendMessageHandler();
+    }
+  };
 
-    return (
-        <>
-            <HStack w={'100%'} m={5} h={'3em'} spacing={4}>
-                <Input
-                    bg={msgInputBg}
-                    value={typingMessage}
-                    onChange={(m) => setTypingMessage(m.target.value)}
-                    focusBorderColor="none"
-                    border={'none'}
-                    placeholder="Message"
-                    w={'100%'}
-                    onKeyDown={keyDownHandler}
-                />
-                <IoSend color={'rgb(132,119,218)'} onClick={sendMessageHandler} size={30} />
-            </HStack>
-        </>
-    );
+  return (
+    <>
+      <HStack w={'100%'} m={5} h={'3em'} spacing={4}>
+        <Input
+          bg={msgInputBg}
+          value={typingMessage}
+          onChange={m => setTypingMessage(m.target.value)}
+          focusBorderColor="none"
+          border={'none'}
+          placeholder="Message"
+          w={'100%'}
+          onKeyDown={keyDownHandler}
+        />
+        <IoSend color={'rgb(132,119,218)'} onClick={sendMessageHandler} size={30} />
+      </HStack>
+    </>
+  );
 };
 
 export default MessageInput;

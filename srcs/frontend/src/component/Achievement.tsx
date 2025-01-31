@@ -6,50 +6,50 @@ import Ach3 from '../assets/ach-3.png';
 
 // TYPE
 type Props = {
-    one: boolean;
-    two: boolean;
-    three: boolean;
+  one: boolean;
+  two: boolean;
+  three: boolean;
 };
 
 export const Achievement = ({ one, two, three }: Props) => {
-    return (
-        <HStack>
-            {one && (
-                <Tooltip label="Clean sheet !!! 5-0" >
-                    <img
-                        alt="loading"
-                        style={{
-                            maxWidth: '3rem',
-                            width: '100%',
-                        }}
-                        src={Ach1}
-                    />
-                </Tooltip>
-            )}
-            {two && (
-                <Tooltip label="2 Wins in a row !!! Amazing" >
-                    <img
-                        alt="loading"
-                        style={{
-                            maxWidth: '3rem',
-                            width: '100%',
-                        }}
-                        src={Ach2}
-                    />
-                </Tooltip>
-            )}
-            {three && (
-                <Tooltip label="5 Wins in a row !!! Rock Star" >
-                    <img
-                        alt="loading"
-                        style={{
-                            maxWidth: '3rem',
-                            width: '100%',
-                        }}
-                        src={Ach3}
-                    />
-                </Tooltip>
-            )}
-        </HStack>
-    );
+  return (
+    <HStack>
+      {one && (
+        <Tooltip label="Clean sheet !!! 5-0">
+          <img
+            alt="loading"
+            style={{
+              maxWidth: '3rem',
+              width: '100%',
+            }}
+            src={Ach1}
+          />
+        </Tooltip>
+      )}
+      {two && (
+        <Tooltip label="2 Wins in a row !!! Amazing">
+          <img
+            alt="loading"
+            style={{
+              maxWidth: '3rem',
+              width: '100%',
+            }}
+            src={Ach2}
+          />
+        </Tooltip>
+      )}
+      {three && (
+        <Tooltip label="5 Wins in a row !!! Rock Star">
+          <img
+            alt="loading"
+            style={{
+              maxWidth: '3rem',
+              width: '100%',
+            }}
+            src={Ach3}
+          />
+        </Tooltip>
+      )}
+    </HStack>
+  );
 };

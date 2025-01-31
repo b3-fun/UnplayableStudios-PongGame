@@ -1,13 +1,5 @@
-import React, { useState } from "react";
-import {
-  useColorModeValue,
-  Box,
-  IconButton,
-  HStack,
-  Avatar,
-  Text,
-  Checkbox,
-} from "@chakra-ui/react";
+import React, { useState } from 'react';
+import { useColorModeValue, Box, IconButton, HStack, Avatar, Text, Checkbox } from '@chakra-ui/react';
 
 type Props = {
   id: string;
@@ -17,10 +9,9 @@ type Props = {
 };
 
 export default function NewMember({ id, name, avatar, addMe }: Props) {
-  const value = useColorModeValue("blackAlpha.200", "whiteAlpha.200");
+  const value = useColorModeValue('blackAlpha.200', 'whiteAlpha.200');
   const [isChecked, setIsChecked] = useState<any>(false);
   const addFriendHandler = () => {
-
     setIsChecked(!isChecked);
     if (isChecked) {
       addMe((newMembers: any) => {
@@ -36,23 +27,17 @@ export default function NewMember({ id, name, avatar, addMe }: Props) {
 
   return (
     <HStack
-      as={"button"}
+      as={'button'}
       p={5}
       pl={6}
-      alignItems={"center"}
+      alignItems={'center'}
       rounded={5}
-      h={"4.5em"}
-      w={"100%"}
+      h={'4.5em'}
+      w={'100%'}
       _hover={{ bg: value }}
       onClick={addFriendHandler}
     >
-      <Checkbox
-        as={Box}
-        isChecked={isChecked}
-        _focus={{ bg: "purple" }}
-        mr={6}
-        colorScheme="purple"
-      />
+      <Checkbox as={Box} isChecked={isChecked} _focus={{ bg: 'purple' }} mr={6} colorScheme="purple" />
       <Avatar name={name} src={avatar} />
       <Text>{name}</Text>
     </HStack>

@@ -1,20 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
-import {
-  Box,
-  IconButton,
-  Text,
-  HStack,
-  VStack,
-  Spacer,
-  Button,
-  Tooltip,
-} from "@chakra-ui/react";
-import { ChatContext } from "../State/ChatProvider";
-import NewMember from "./NewMember";
-import { ArrowBackIcon, ArrowForwardIcon } from "@chakra-ui/icons";
-import { GrIteration } from "react-icons/gr";
-import axios from "axios";
-import { ADD_MEMBER } from "../constants";
+import React, { useContext, useEffect, useState } from 'react';
+import { Box, IconButton, Text, HStack, VStack, Spacer, Button, Tooltip } from '@chakra-ui/react';
+import { ChatContext } from '../State/ChatProvider';
+import NewMember from './NewMember';
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons';
+import { GrIteration } from 'react-icons/gr';
+import axios from 'axios';
+import { ADD_MEMBER } from '../constants';
 
 type Props = {
   toggleNewMembers: () => void;
@@ -31,15 +22,15 @@ export default function AddMemebers({ toggleNewMembers, roomId }: Props) {
     for (var i = 0; i != newFriends.length; i++) {
       for (var j = 0; j != selectedNewMembers.length; j++) {
         if (newFriends[i].id == selectedNewMembers[j]) {
-          const member = { ...newFriends[i], role: "member" }
+          const member = { ...newFriends[i], role: 'member' };
           axios
             .post(ADD_MEMBER + selectedNewMembers[j], {
               room_id: selectedChat.id,
-              room_password: "",
+              room_password: '',
             })
-            .then((res) => {
+            .then(res => {
               dispatch({
-                type: "ADD_MEMBER",
+                type: 'ADD_MEMBER',
                 data: member,
               });
             });
@@ -55,38 +46,26 @@ export default function AddMemebers({ toggleNewMembers, roomId }: Props) {
 
   useEffect(() => {
     const keyDownHandler = (event: any) => {
-      if (event.key === "Escape") {
+      if (event.key === 'Escape') {
         event.preventDefault();
         toggleNewMembers();
       }
     };
-    document.addEventListener("keydown", keyDownHandler);
+    document.addEventListener('keydown', keyDownHandler);
     return () => {
-      document.removeEventListener("keydown", keyDownHandler);
+      document.removeEventListener('keydown', keyDownHandler);
     };
   });
 
   return (
-    <VStack overflow={"auto"} position={"relative"} h={"100%"} w={"100%"}>
-      <HStack overflow={"visible"} px={5} w={"100%"} m={0} spacing={8}>
-        <Box as={"button"}>
-          <ArrowBackIcon
-            m={0}
-            p={0}
-            h={30}
-            fontSize={25}
-            onClick={toggleNewMembers}
-          />
+    <VStack overflow={'auto'} position={'relative'} h={'100%'} w={'100%'}>
+      <HStack overflow={'visible'} px={5} w={'100%'} m={0} spacing={8}>
+        <Box as={'button'}>
+          <ArrowBackIcon m={0} p={0} h={30} fontSize={25} onClick={toggleNewMembers} />
         </Box>
         <Text fontSize={20}>Add Members</Text>
       </HStack>
-      <VStack
-        pt={"1.5%"}
-        h={"100%"}
-        overflow={"auto"}
-        w={"100%"}
-        alignItems={"left"}
-      >
+      <VStack pt={'1.5%'} h={'100%'} overflow={'auto'} w={'100%'} alignItems={'left'}>
         {newFriends.map((friend: any, key: any) =>
           !isMember(friend.id) ? (
             <NewMember
@@ -96,27 +75,21 @@ export default function AddMemebers({ toggleNewMembers, roomId }: Props) {
               addMe={setSelectedFriends}
               key={key.toString()}
             />
-          ) : undefined
+          ) : undefined,
         )}
       </VStack>
       {selectedFriends.length && (
-        <Box
-          position={"absolute"}
-          right={4}
-          bottom={4}
-          rounded={30}
-          onClick={addNewMembersHandler}
-        >
+        <Box position={'absolute'} right={4} bottom={4} rounded={30} onClick={addNewMembersHandler}>
           <Tooltip label="add Members" openDelay={500}>
             <IconButton
               fontSize={24}
               w={14}
               h={14}
               rounded={30}
-              bg={"customPurple"}
-              variant={"ghost"}
-              aria-label={"add Members"}
-              color={"white"}
+              bg={'customPurple'}
+              variant={'ghost'}
+              aria-label={'add Members'}
+              color={'white'}
               icon={<ArrowForwardIcon />}
             />
           </Tooltip>

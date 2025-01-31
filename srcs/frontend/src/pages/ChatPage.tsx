@@ -11,23 +11,23 @@ import { GlobalContext } from '../State/Provider';
 import { useNavigate } from 'react-router-dom';
 
 export default function ChatPage() {
-    const { dispatch, socket } = React.useContext<any>(GlobalContext);
-    const navigate = useNavigate();
+  const { dispatch, socket } = React.useContext<any>(GlobalContext);
+  const navigate = useNavigate();
 
-    // useEffect
-    React.useEffect(() => {
-        getUserInfo(dispatch).catch(() => {
-            navigate(pagesContent.login.url);
-        });
+  // useEffect
+  React.useEffect(() => {
+    getUserInfo(dispatch).catch(() => {
+      navigate(pagesContent.login.url);
+    });
 
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    return (
-        <ChatProvider>
-            <Flex w={'100%'} h={'98%'} mx={{ base: 0, md: 0, lg: 0 }} pb={10} direction={'row'} justifyContent={'center'}>
-                <SideBar />
-            </Flex>
-        </ChatProvider>
-    );
+  return (
+    <ChatProvider>
+      <Flex w={'100%'} h={'98%'} mx={{ base: 0, md: 0, lg: 0 }} pb={10} direction={'row'} justifyContent={'center'}>
+        <SideBar />
+      </Flex>
+    </ChatProvider>
+  );
 }
