@@ -154,6 +154,8 @@ const SideBar = () => {
         p={5}
         overflow={'auto'}
         bg={'black'}
+        border="2px solid yellow"
+        outline="2px solid black"
       >
         {newChannel ? <NewChannel /> : !selectedChat ? <ChatTabs /> : <Messaging />}
       </Flex>

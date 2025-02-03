@@ -100,17 +100,7 @@ function MessagingBox() {
         backArrowCallBack={toggleOffSelectedChat}
         menu={selectedChat.chat === 'G' ? <GroupMenu /> : <FriendMenu />}
       />
-      <VStack
-        overflow={'auto'}
-        maxW={'62em'}
-        bgGradient={['linear(to-t, purple.3000, black)', `linear(to-b, red, black)`]}
-        alignItems={'center'}
-        h={'100%'}
-        w={'100%'}
-        flex={1}
-        p={3}
-        pb={1.5}
-      >
+      <VStack overflow={'auto'} maxW={'62em'} alignItems={'center'} h={'100%'} w={'100%'} flex={1} p={3} pb={1.5}>
         <VStack maxW={'100%'} flex={1} h={'100%'} w={'100%'} overflowY={'auto'} px={5}>
           <MessagesList />
         </VStack>

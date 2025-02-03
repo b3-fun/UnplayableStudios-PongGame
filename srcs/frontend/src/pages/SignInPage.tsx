@@ -69,8 +69,9 @@ export default function SignInPage() {
             mb={'30px'}
             // fontSize={{base: 45,md:60}}
             fontSize={60}
+            textTransform="uppercase"
           >
-            Welcome To
+            Welcome To Pong
           </Heading>
           <form method={'POST'}>
             <Button
