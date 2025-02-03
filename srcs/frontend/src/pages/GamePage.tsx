@@ -14,6 +14,7 @@ import {
   useTheme,
   VStack,
   Center,
+  Spacer,
 } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import React from 'react';
@@ -28,6 +29,7 @@ import { clearGameWithFriend, clearOpponent, newNotification } from '../State/Ac
 import { getUserInfo } from '../State/Api';
 import { GlobalContext } from '../State/Provider';
 import { getJwtToken } from '../utils/token';
+import Logo from '../component/logo';
 
 export default function GamePage() {
   usePageTitle(pagesContent.play.title);
@@ -352,8 +354,17 @@ export default function GamePage() {
 
   return (
     <>
-      <VStack alignContent="center" justifyContent="center" backgroundColor="black" borderRadius="3xl" p={5}>
-        <Grid h="100%" templateColumns="repeat(8, 1fr)" gap={10}>
+      <VStack
+        maxW="860px"
+        h="100%"
+        alignSelf="center"
+        alignContent="center"
+        justifyContent="center"
+        backgroundColor="black"
+        borderRadius="3xl"
+        p={15}
+      >
+        <Grid templateColumns="repeat(8, 1fr)" gap={10}>
           <GridItem colSpan={4}>
             <HStack justifyContent="flex-end" spacing={10}>
               <HStack justifyContent="flex-end" spacing={3}>
@@ -375,6 +386,7 @@ export default function GamePage() {
         </Grid>
         <Box
           w="100%"
+          h="100%"
           ref={containerRef}
           flexDirection="column"
           display="flex"
@@ -383,11 +395,14 @@ export default function GamePage() {
           position="relative"
         >
           {!play && !countdown && (
-            <Flex w="100%" alignItems="center" h="10rem" justifyContent="center">
-              <Spinner marginTop="20rem"></Spinner>
-            </Flex>
+            <Center position="absolute" top={0} left={0} right={0} bottom={0} zIndex={2}>
+              <Spinner />
+            </Center>
           )}
-          <motion.canvas width={canvasWidth} height="400" ref={canvasRef} />
+
+          <Box border="2px solid white" height="404">
+            <motion.canvas width={canvasWidth} height="400" ref={canvasRef} />
+          </Box>
           {countdown !== null && (
             <Center position="absolute" top={0} left={0} right={0} bottom={0} zIndex={2}>
               <Box
@@ -397,6 +412,8 @@ export default function GamePage() {
                 fontWeight="bold"
                 p="6"
                 borderRadius="full"
+                borderColor="white"
+                borderWidth={2}
                 width="200px"
                 height="200px"
                 display="flex"

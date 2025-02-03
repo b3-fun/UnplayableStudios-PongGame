@@ -168,7 +168,7 @@ export default function Navbar() {
             <Flex
               _dark={{ boxShadow: 'dark-lg' }}
               _light={{ boxShadow: 'md' }}
-              rounded="20px"
+              borderRadius="xl"
               bg={'black'}
               justifyContent={'center'}
               alignItems={'center'}
@@ -180,6 +180,7 @@ export default function Navbar() {
                     px={['10px', '20px', '20px', '30px']}
                     fontSize={'30px'}
                     color={location.pathname === tab.url ? 'yellow' : 'none'}
+                    textTransform="uppercase"
                   >
                     {tab.title}
                   </Text>
@@ -190,7 +191,9 @@ export default function Navbar() {
         </Show>
         <Spacer />
       </Flex>
-
+      <Flex mb={0} px={10} alignItems="center" justifyContent="center" overflow={'hideen'}>
+        <Logo />
+      </Flex>
       <Outlet />
     </Stack>
   );

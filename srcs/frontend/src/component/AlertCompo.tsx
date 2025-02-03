@@ -24,7 +24,7 @@ export const AlertCompo = ({ message, type }: Props) => {
   }, []);
 
   return (
-    <Box zIndex={1000000} position="fixed" top="0.3rem" right="50%" transform="translate(50%,0)">
+    <Box zIndex={1000000} position="fixed" bottom="0.3rem" right="50%" transform="translate(50%,0)">
       <ScaleFade initialScale={0.9} in={true}>
         <Flex
           maxW="md"

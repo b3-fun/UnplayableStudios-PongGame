@@ -11,7 +11,7 @@ export const Card = ({ children, ...props }: Props) => {
   return (
     <Stack
       p={10}
-      _dark={{ boxShadow: 'dark-lg', bg: 'black' }}
+      _dark={{ boxShadow: 'dark-lg', bg: 'black', border: '2px solid yellow', outline: '2px solid black' }}
       _light={{ boxShadow: 'md' }}
       borderRadius="2xl"
       boxShadow="2xl"
