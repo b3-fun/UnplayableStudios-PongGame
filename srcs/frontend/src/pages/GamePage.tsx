@@ -352,7 +352,7 @@ export default function GamePage() {
 
   return (
     <>
-      <VStack alignContent="center" justifyContent="center">
+      <VStack alignContent="center" justifyContent="center" backgroundColor="black" borderRadius="3xl" p={5}>
         <Grid h="100%" templateColumns="repeat(8, 1fr)" gap={10}>
           <GridItem colSpan={4}>
             <HStack justifyContent="flex-end" spacing={10}>
@@ -384,7 +384,7 @@ export default function GamePage() {
         >
           {!play && !countdown && (
             <Flex w="100%" alignItems="center" h="10rem" justifyContent="center">
-              <Spinner></Spinner>
+              <Spinner marginTop="20rem"></Spinner>
             </Flex>
           )}
           <motion.canvas width={canvasWidth} height="400" ref={canvasRef} />
@@ -416,7 +416,7 @@ export default function GamePage() {
             </HStack>
           </Badge>
         )}
-        <HStack spacing={2} mt={5}>
+        <HStack spacing={2} mt={5} backgroundColor="black">
           <Text>Use</Text>
           <span>
             <Kbd p={1}>

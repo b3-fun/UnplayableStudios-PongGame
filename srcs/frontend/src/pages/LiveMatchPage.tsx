@@ -261,6 +261,7 @@ export default function LiveMatchPage() {
           display="flex"
           alignItems="center"
           justifyContent="center"
+          backgroundColor="black"
         >
           <motion.canvas width={canvasWidth} height="400" ref={canvasRef} />
         </Box>
