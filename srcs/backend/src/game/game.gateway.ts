@@ -20,7 +20,8 @@ import { AuthService } from '../auth/auth.service';
 @WebSocketGateway({
     namespace: 'game',
     cors: {
-        origin: process.env.CLIENT_URL,
+        // origin: process.env.CLIENT_URL, //Temporary comment
+        origin: true,
         credentials: true,
         allowedHeaders: ["Authorization"]
     }

@@ -15,7 +15,8 @@ import { AuthService } from '../auth/auth.service';
 @WebSocketGateway({
   namespace: 'userstate',
   cors: {
-    origin: process.env.CLIENT_URL,
+    // origin: process.env.CLIENT_URL, //Temporary comment
+    origin: true,
     credentials: true,
     allowedHeaders: ["Authorization"]
   }
