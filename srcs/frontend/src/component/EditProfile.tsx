@@ -144,7 +144,7 @@ const EditProfile = (props: Props) => {
 
         <Modal isOpen={isOpen} onClose={handleClose} isCentered>
           <ModalOverlay />
-          <ModalContent borderRadius="2xl">
+          <ModalContent borderRadius="2xl" bg="black" border="2px solid yellow" outline="2px solid black">
             <ModalHeader>Edit Profile</ModalHeader>
             <ModalCloseButton borderRadius="xl" />
             <ModalBody>
@@ -231,41 +231,25 @@ const EditProfile = (props: Props) => {
             <ModalFooter>
               <Button
                 onClick={handleClose}
-                variant="solid"
-                bg="red"
-                color="blackAlpha.900"
-                borderRadius="2xl"
+                borderRadius="xl"
                 fontSize="xl"
                 size="xl"
                 py={2}
                 px={5}
-                fontWeight="light"
-                _focus={{
-                  bg: 'red',
-                }}
-                _hover={{
-                  bg: 'red',
-                }}
+                fontWeight="bold"
+                textTransform="uppercase"
               >
                 Close
               </Button>
               <Button
                 ml={5}
-                variant="solid"
-                bg="green"
-                borderRadius="2xl"
-                color="blackAlpha.900"
+                borderRadius="xl"
                 fontSize="xl"
                 size="xl"
                 py={2}
                 px={5}
-                fontWeight="light"
-                _focus={{
-                  bg: 'green',
-                }}
-                _hover={{
-                  bg: 'green',
-                }}
+                fontWeight="bold"
+                textTransform="uppercase"
                 onClick={submitProfile}
               >
                 Save
