@@ -24,6 +24,14 @@ async function bootstrap() {
     // };
     // app.enableCors(corsOptions);
     logger.log(`CORS enabled for origin: ${process.env.CLIENT_URL}`);
+    const corsOptions = {
+      origin: true, // Allow all origins in development
+      credentials: true,
+      methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+      allowedHeaders: ['Content-Type', 'Authorization', 'Accept'],
+    };
+    app.enableCors(corsOptions);
+    logger.log('CORS enabled for all origins in development mode');
 
     const config = new DocumentBuilder()
         .setTitle('ft_Transcendence')
