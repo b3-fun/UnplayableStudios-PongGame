@@ -17,11 +17,12 @@ async function bootstrap() {
     app.use(cookieParser());
     logger.log('Cookie parser middleware enabled');
 
-    const corsOptions = {
-      origin: process.env.CLIENT_URL,
-      credentials: true,
-    };
-    app.enableCors(corsOptions);
+    // Temporary comment
+    // const corsOptions = {
+    //   origin: process.env.CLIENT_URL,
+    //   credentials: true,
+    // };
+    // app.enableCors(corsOptions);
     logger.log(`CORS enabled for origin: ${process.env.CLIENT_URL}`);
 
     const config = new DocumentBuilder()
