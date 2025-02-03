@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Box } from '@chakra-ui/react';
-import loadingGif from '../assets/pongame.gif';
+import logoImage from '../assets/logo.png';
 
 export const Loading = () => {
   return (
@@ -26,7 +26,7 @@ export const Loading = () => {
           right: '50%',
           transform: 'translate(50%, -50%)',
         }}
-        src={loadingGif}
+        src={logoImage}
       />
     </Box>
   );

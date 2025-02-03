@@ -93,7 +93,7 @@ const HomePage = () => {
   }, []);
 
   return (
-    <Card w="100%" h="100%">
+    <Card w="100%" h="100%" bg={'black'}>
       <Stack
         justifyContent="space-around"
         h="100%"
@@ -102,14 +102,14 @@ const HomePage = () => {
         spacing={10}
       >
         <Stack spacing={5} alignItems="center">
-          <Stack spacing={2} alignItems="center" w="100%">
+          {/* <Stack spacing={2} alignItems="center" w="100%" bg={'black'}>
             <Heading fontSize="xl">Play</Heading>
             <Line maxW="7rem" />
-          </Stack>
+          </Stack> */}
           <Button
             variant="solid"
-            bg="green"
-            color="blackAlpha.900"
+            bg="yellow"
+            color="black"
             borderRadius="2xl"
             fontSize="xl"
             size="xl"
@@ -117,10 +117,10 @@ const HomePage = () => {
             px={5}
             fontWeight="light"
             _focus={{
-              bg: 'green',
+              opacity: 0.8,
             }}
             _hover={{
-              bg: 'green',
+              opacity: 0.8,
             }}
             onClick={onOpen}
           >
@@ -129,7 +129,7 @@ const HomePage = () => {
 
           <Modal isCentered closeOnOverlayClick={false} isOpen={isOpen} onClose={onClose}>
             <ModalOverlay />
-            <ModalContent borderRadius="2xl">
+            <ModalContent borderRadius="2xl" border={'1px solid yellow'} bg={'black'}>
               <ModalHeader>
                 <Badge mb={8} borderRadius="full" px={3}>
                   <Text fontSize="2xl">Please Slide Right 👉</Text>

@@ -1,14 +1,17 @@
 import React from 'react';
-import { Heading, Text } from '@chakra-ui/react';
+
+import { Image } from '@chakra-ui/react';
+// Assuming you'll create an assets folder in src
+import logoImage from '../assets/logo.png';
 
 export default function Logo() {
   return (
-    <Heading _dark={{ color: 'white' }} _light={{ color: '#000000' }}>
-      Pon
-      <Text as={'span'} color={'red'}>
-        G
-      </Text>
-      ame
-    </Heading>
+    <Image
+      src={logoImage}
+      alt="Pong Logo"
+      h="40px" // Adjust height as needed
+      w="auto"
+      _dark={{ filter: 'brightness(1.2)' }} // Optional: adjust brightness in dark mode
+    />
   );
 }

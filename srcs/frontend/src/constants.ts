@@ -29,6 +29,10 @@ export const MESSAGES = API + '/user/msg/';
 export const BLOCKED_USERS = API + '/user/list/all_blocked';
 
 export const pagesContent = {
+  test: {
+    url: '/test',
+    title: 'Pong | Test',
+  },
   home: {
     url: '/home',
     title: 'Pong | Welcome',

@@ -12,14 +12,16 @@ function FloatingActionButton() {
           as={IconButton}
           w={14}
           h={14}
-          bg={'customPurple'}
+          bg={'yellow'}
+          border={'1px solid black'}
+          _hover={{ bg: 'yellow' }}
           rounded={30}
           size={'lg'}
           aria-label="Search database"
-          icon={<AddIcon />}
+          icon={<AddIcon color={'black'} />}
           variant="ghost"
         />
-        <MenuList m={0}>
+        <MenuList m={0} bg={'black'} border={'1px solid yellow'}>
           <MenuItem
             icon={<AddIcon />}
             onClick={() => {

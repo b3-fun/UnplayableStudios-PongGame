@@ -3,7 +3,6 @@ import React from 'react';
 import { AiFillLock } from 'react-icons/ai';
 import { Link, useNavigate } from 'react-router-dom';
 import Logo from '../component/logo';
-import ToggleMode from '../component/toggleMode';
 import { pagesContent, REGEX_NUM } from '../constants';
 import { getUserInfo, URLS } from '../State/Api';
 import { GlobalContext } from '../State/Provider';
@@ -29,15 +28,14 @@ export default function TwoFacPage() {
           <Logo />
         </Link>
         <Spacer />
-        <ToggleMode />
       </Flex>
       <Stack flexGrow={1} alignItems="center" alignSelf="center" justifyContent="center" spacing={5} maxW="30rem">
-        <Icon as={AiFillLock} color="green" fontSize="9xl" />
+        <Icon as={AiFillLock} color="black" fontSize="9xl" />
 
-        <Text textAlign="center" fontSize="4xl">
+        <Text textAlign="center" fontSize="4xl" color={'black'}>
           2-Factor Authentication
         </Text>
-        <Text textAlign="center" fontSize="xl">
+        <Text textAlign="center" fontSize="xl" color={'black'}>
           Please enter the code
         </Text>
         <Box
@@ -49,8 +47,26 @@ export default function TwoFacPage() {
           alignItems="center"
           w="100%"
         >
-          <Input name="code" borderRadius="xl" placeholder="code" value={code} type="text" onChange={changeCode} />
-          <Button mt={10} color="customPurple" type="submit" variant="ghost">
+          <Input
+            name="code"
+            borderRadius="xl"
+            placeholder="code"
+            value={code}
+            type="text"
+            onChange={changeCode}
+            border={'1px solid black'}
+            outline={'1px solid black'}
+            color={'black'}
+            _placeholder={{ color: 'black' }}
+          />
+          <Button
+            mt={10}
+            color="white"
+            type="submit"
+            variant="solid"
+            _hover={{ opacity: 0.8, bg: 'black' }}
+            bg={'black'}
+          >
             Authenticate
           </Button>
         </Box>

@@ -190,16 +190,16 @@ function Tabs() {
           position={'relative'}
         >
           <TabList>
-            <Tab _selected={{ color: 'red' }}>
+            <Tab _selected={{ color: 'yellow' }}>
               <Text fontSize={20}>Friends</Text>
             </Tab>
-            <Tab _selected={{ color: 'red' }}>
+            <Tab _selected={{ color: 'yellow' }}>
               <Text fontSize={20}>Channels</Text>
             </Tab>
-            <Tab _selected={{ color: 'red' }}>
+            <Tab _selected={{ color: 'yellow' }}>
               <Text fontSize={20}>All Users</Text>
             </Tab>
-            <Tab _selected={{ color: 'red' }}>
+            <Tab _selected={{ color: 'yellow' }}>
               <Text fontSize={20}>All Channels</Text>
             </Tab>
           </TabList>
@@ -284,7 +284,7 @@ function Tabs() {
                               onClick={() => sendFriendReq(user.user_id)}
                               fontSize={18}
                               rounded={30}
-                              color={'green'}
+                              color={'yellow'}
                               variant={'ghost'}
                               aria-label={'new channel'}
                               icon={<AiOutlineUserAdd />}
@@ -342,7 +342,7 @@ function Tabs() {
                             }}
                             fontSize={18}
                             rounded={30}
-                            color={'green'}
+                            color={'yellow'}
                             variant={'ghost'}
                             aria-label={'new channel'}
                             icon={<AiOutlineUsergroupAdd />}
@@ -376,10 +376,10 @@ function Tabs() {
               <Input type="text" onChange={e => setPassword(e.target.value)} />
             </ModalBody>
             <ModalFooter pb={6}>
-              <Button variant={'ghost'} colorScheme="purple" mr={3} onClick={onClose}>
+              <Button variant={'ghost'} colorScheme="customRed" mr={3} onClick={onClose}>
                 CANCEL
               </Button>
-              <Button variant={'ghost'} color="customRed" mr={3} onClick={submit}>
+              <Button variant={'ghost'} color="yellow" mr={3} onClick={submit}>
                 SUBMIT
               </Button>
             </ModalFooter>

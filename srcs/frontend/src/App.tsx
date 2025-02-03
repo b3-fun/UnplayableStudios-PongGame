@@ -34,6 +34,7 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route element={<Navbar />}>
+                <Route path={pagesContent.test.url} element={<ChatPage />} />
                 <Route path={pagesContent.home.url} element={<HomePage />} />
                 <Route path={pagesContent.chat.url} element={<ChatPage />} />
                 <Route path={pagesContent.profile.url + '/:user_id'} element={<ProfilePage />} />

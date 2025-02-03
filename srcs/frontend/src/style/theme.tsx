@@ -1,22 +1,31 @@
 import { extendTheme, theme as base } from '@chakra-ui/react';
-// import the default theme as base and add it to the heading and body in case of the Jua font not loaded
-import 'fontsource-jua';
+import '@fontsource/jersey-10';
 
 const fonts = {
-  heading: `Jua, ${base.fonts?.heading}`,
-  body: `Jua, ${base.fonts?.body}`,
+  // Update font names to use Jersey 10 as primary font with fallbacks
+  heading: `"Jersey 10", ${base.fonts?.heading}`,
+  body: `"Jersey 10", ${base.fonts?.body}`,
 };
 const colors = {
   // white: '#E0E0E0',
   white: '#FFF',
-  black: '#475772',
+  black: '#000',
   green: '#A2CE73',
+  yellow: '#FFFF25',
   red: '#EF9795',
   lightGreen: 'rgb(242,254,225)',
   darkGreen: 'rgb(117,179,102)',
   lightBlack: 'rgb(33,33,33)',
   customPurple: 'rgb(132,119,218)',
   customRed: '#FF5C5C',
+};
+
+const styles = {
+  global: {
+    body: {
+      bg: '#FFFF25', // or any specific yellow color like '#FFFF00'
+    },
+  },
 };
 
 const config = {
@@ -51,6 +60,6 @@ const Card = {
 const components = {
   Card,
 };
-const theme = extendTheme({ fonts, colors, config, components });
+const theme = extendTheme({ fonts, colors, config, components, styles });
 
 export default theme;

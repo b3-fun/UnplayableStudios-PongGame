@@ -2,7 +2,6 @@ import React from 'react';
 import { Button, Flex, Heading, Image, Spacer, Text } from '@chakra-ui/react';
 import intra from '../assets/intra.png';
 import Logo from '../component/logo';
-import ToggleMode from '../component/toggleMode';
 import { API, pagesContent } from '../constants';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { GlobalContext } from '../State/Provider';
@@ -43,12 +42,22 @@ export default function SignInPage() {
     <>
       <Flex mb={5} px={10} justifyContent={'right'} alignItems={'center'} overflow={'hidden'}>
         <Spacer />
-        <ToggleMode />
       </Flex>
-      <Flex w={'100%'} h={'100%'} m={0} p={0} alignItems={'center'} justifyContent={'center'}>
+      <Flex
+        w={'100%'}
+        h={'100%'}
+        m={0}
+        p={0}
+        alignItems={'center'}
+        justifyContent={'center'}
+        flexDirection={'column'}
+        gap={2}
+      >
+        <Logo />
         <Flex
           _dark={{ boxShadow: 'dark-lg' }}
           _light={{ boxShadow: 'md' }}
+          backgroundColor={'black'}
           rounded="30px"
           w={{ base: '700px', md: '500px' }}
           h={'400px'}
@@ -63,21 +72,20 @@ export default function SignInPage() {
           >
             Welcome To
           </Heading>
-          <Logo />
           <form method={'POST'}>
             <Button
               onClick={handleSignIn}
-              _hover={{ bg: 'green' }}
+              _hover={{ opacity: 0.8 }}
               _active={{}} // TIPS: on click keep the color green
-              rounded="20px"
               p={8}
               h={'50px'}
               mt={10}
               w={'300px'}
-              bg={'green'}
+              color={'yellow'}
+              bg={'black'}
             >
               {/*<Image w={10} mr={8} src={intra}></Image>*/}
-              <Text fontSize={30}>Sign In</Text>
+              <Text fontSize={30}>PRESS TO CONTINUE</Text>
             </Button>
           </form>
         </Flex>

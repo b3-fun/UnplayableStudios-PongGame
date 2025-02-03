@@ -25,3 +25,10 @@
   grid-template-columns: 1fr 4fr;
   gap: 20px;
 }
+
+@font-face {
+  font-family: 'Jersey10';
+  src: url('/fonts/Jersey10-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}

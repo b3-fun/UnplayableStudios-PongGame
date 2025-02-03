@@ -43,7 +43,7 @@ export default function DeleteRoom() {
       <Modal isOpen={isOpen} onClose={onClose} isCentered>
         <ModalOverlay />
         <ModalContent w={'20em'}>
-          <ModalHeader>PongGame</ModalHeader>
+          <ModalHeader>Pong</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             <Text mb={4}> Are you sure you want to delete and leave the group?</Text>

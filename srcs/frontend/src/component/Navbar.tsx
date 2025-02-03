@@ -17,7 +17,6 @@ import {
 import React from 'react';
 
 import Logo from './logo';
-import ToggleMode from './toggleMode';
 
 import { Link, Outlet, useLocation } from 'react-router-dom';
 import { pagesContent, SOCKET, SOCKET_STATUS, tabs } from '../constants';
@@ -134,7 +133,7 @@ export default function Navbar() {
           </Button>
         </Show>
         <Modal onClose={onClose} size={'full'} isOpen={isOpen}>
-          <ModalContent _light={{ bg: 'white' }} _dark={{ bg: '#000' }}>
+          <ModalContent _light={{ bg: 'white' }} _dark={{ bg: 'black' }}>
             <ModalHeader>
               <Link to={pagesContent.home.url}>
                 <Box onClick={onClose}>
@@ -152,7 +151,7 @@ export default function Navbar() {
                         onClick={onClose}
                         fontSize={'30px'}
                         p={'10px'}
-                        color={location.pathname === tab.url ? 'red' : 'none'}
+                        color={location.pathname === tab.url ? 'yellow' : 'none'}
                       >
                         {tab.title}
                       </Text>
@@ -170,6 +169,7 @@ export default function Navbar() {
               _dark={{ boxShadow: 'dark-lg' }}
               _light={{ boxShadow: 'md' }}
               rounded="20px"
+              bg={'black'}
               justifyContent={'center'}
               alignItems={'center'}
               px={'20px'}
@@ -179,7 +179,7 @@ export default function Navbar() {
                   <Text
                     px={['10px', '20px', '20px', '30px']}
                     fontSize={'30px'}
-                    color={location.pathname === tab.url ? 'red' : 'none'}
+                    color={location.pathname === tab.url ? 'yellow' : 'none'}
                   >
                     {tab.title}
                   </Text>
@@ -189,7 +189,6 @@ export default function Navbar() {
           </Show>
         </Show>
         <Spacer />
-        <ToggleMode />
       </Flex>
 
       <Outlet />

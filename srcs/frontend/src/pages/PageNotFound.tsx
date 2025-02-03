@@ -1,6 +1,5 @@
 import React from 'react';
 import { Flex, Spacer, Stack, Text } from '@chakra-ui/react';
-import ToggleMode from '../component/toggleMode';
 import Logo from '../component/logo';
 import { Link } from 'react-router-dom';
 import { pagesContent } from '../constants';
@@ -14,7 +13,6 @@ export default function PageNotFound() {
           <Logo />
         </Link>
         <Spacer />
-        <ToggleMode />
       </Flex>
       <Stack flexGrow={1} alignItems="center" justifyContent="center">
         <img

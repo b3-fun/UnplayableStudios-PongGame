@@ -14,14 +14,14 @@ export default function ChatPage() {
   const { dispatch, socket } = React.useContext<any>(GlobalContext);
   const navigate = useNavigate();
 
-  // useEffect
-  React.useEffect(() => {
-    getUserInfo(dispatch).catch(() => {
-      navigate(pagesContent.login.url);
-    });
+  // // useEffect
+  // React.useEffect(() => {
+  //   getUserInfo(dispatch).catch(() => {
+  //     navigate(pagesContent.login.url);
+  //   });
 
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <ChatProvider>
